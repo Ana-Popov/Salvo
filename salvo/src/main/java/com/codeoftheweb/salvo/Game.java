@@ -41,4 +41,8 @@ public class Game {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public long getId() {
+        return id;
+    }
 }
