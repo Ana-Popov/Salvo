@@ -1,6 +1,8 @@
 package com.codeoftheweb.salvo;
 
 import javax.persistence.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Entity
 public class GamePlayer {
@@ -22,6 +24,10 @@ public class GamePlayer {
     public GamePlayer(Player player, Game game){
         this.player = player;
         this.game= game;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public Player getPlayer() {
