@@ -1,23 +1,87 @@
+//VUE JS 
+var app = new Vue({
+    el: '#app',
+    data: {
+        gamesJson: [],
+        games: [],
+        players: [],
+            
+    },
+    created() {
+        this.fetchData();
+    },
 
-document.addEventListener("DOMContentLoaded", function () {
+    methods: {
+        fetchData: function () {
+            let url = '/api/games';
+            fetch(url)
+                .then((response) => response.json())
+                .then(function (data) {
+                    console.log(data)
+                    app.gamesJson = data;
+                    app.getGames();
+                })
+        },
+        getGames: function () {
+            let array = [];
+            let games = this.gamesJson;
+            for (var i = 0; i < games.length; i++) {
+                let date = new Date(games[i].created);
+                dates = date.toLocaleString();
+                let playerOne = games[i].gamePlayers[0].player.email;
+                let playerTwo = "";
+                
+                if (games[i].gamePlayers[1] != null) {
+                    playerTwo = games[i].gamePlayers[1].player.email;
+                }
+                
+                let object = {
+                    created: dates,
+                    playerOne: playerOne,
+                    playerTwo: playerTwo,
+                }
+                array.push(object); 
+                console.log(object)
+            }
+            this.games = array;
+        
+        },
 
-    const url = 'http://localhost:8080/api/games';
-    fetch(url)
-        .then((resp) => resp.json()) //transform data into json 
-        .then(function (data) {
-            //code here
+    }
+}); //end Vue
 
-        })
-        .catch(function (error) {
-            console.log('failed to load, try again', error);
-        });
-})
 
-//function creates a type of element passed in the parameter
-function createNode(element){
-    return document.createElement(element);
-}
-//append the second el to its parent on the DOM 
-function append(parent, el){
-    return parent.appendChild(el);
-}
+
+////VANILLA JAVASCRIPT
+//document.addEventListener("DOMContentLoaded", function () {
+//    const ol = document.getElementById("games");
+//    const url = '/api/games';
+////    fetch(url,{
+//////        'credentials': 'included'
+////    })
+//    fetch(url)
+//        .then(resp => resp.json()) //transform data into json 
+//        .then(function (data) {
+//            //code here
+//        console.log(data)
+//        let games = data;
+//        return games.map(function(game){
+//            let li = createNode("li");
+//            li.innerHTML = game.created;
+//            ol.append(li);
+//        })
+//
+//        })
+//        .catch(function (error) {
+//            console.log('failed to load, try again', error);
+//        });
+//})
+//
+////function creates a type of element passed in the parameter
+//function createNode(element) {
+//    return document.createElement(element);
+//}
+////append the second el to its parent on the DOM 
+//function append(parent, el) {
+//    return parent.appendChild(el);
+//}
