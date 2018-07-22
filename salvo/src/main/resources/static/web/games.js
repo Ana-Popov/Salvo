@@ -32,8 +32,10 @@ var app = new Vue({
                 let playerTwo = "";
                 
                 if (games[i].gamePlayers[1] != null) {
-                    playerTwo = games[i].gamePlayers[1].player.email;
+                    
+                    player2 = games[i].gamePlayers[1].player.email;
                 }
+                let playerTwo="vs"+player2;
                 
                 let object = {
                     created: dates,
