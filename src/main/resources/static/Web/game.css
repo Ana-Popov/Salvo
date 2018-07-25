@@ -1,0 +1,19 @@
+html, body{
+    width: 100%;
+}
+.table{
+    margin: 0 auto;
+    width: 60%;
+    text-align: center;
+}
+.title { 
+    text-align: center;
+    margin: 20px;
+}
+
+.ship-location{
+    background-color:darkblue;
+}
+h2.subtitle{
+    font-size: 10px;
+}
