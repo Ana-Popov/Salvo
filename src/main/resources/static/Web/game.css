@@ -1,12 +1,35 @@
-html, body{
+body{
     width: 100%;
 }
-.table{
-    margin: 0 auto;
-    width: 60%;
+.alltables{
+    margin: 20px auto;
+    margin-left: 200px;
     text-align: center;
 }
-.title { 
+
+table{
+    border-collapse: separate;
+}
+
+.alltables {
+    display: inline-flex;
+}
+
+.ships, .salvoes{
+    flex-direction: column;
+    justify-content: space-around;
+    width: 60%;
+     background: linear-gradient(to right, rgba(63, 127, 191), rgba(255,0,59,0));
+    
+}
+
+.salvoes {
+    margin-left: 100px;
+}
+.ships{
+    margin-left: 30px;
+}
+.title, .well { 
     text-align: center;
     margin: 20px;
 }
@@ -14,6 +37,16 @@ html, body{
 .ship-location{
     background-color:darkblue;
 }
+.salvo-location {
+    border: 1px green solid;
+    border-radius: 1px;
+    
+}
+.hit{
+    background-color: red;
+    
+}
+
 h2.subtitle{
-    font-size: 10px;
+    font-size: 
 }

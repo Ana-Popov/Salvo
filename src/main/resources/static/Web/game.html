@@ -12,21 +12,44 @@
 
 <body>
     <div id="app">
-       <div class="container">
-        <h1 class="title"> Game Information </h1>
-        <h2 class="well"> {{players.player1}} {{players.player2}}</h2>
-        </div>
-        <table class="table table-bordered cell-hover">
-            <tr>
-                <th></th>
-                <th class="table-dark" scope="col" v-for="key in cols"> {{key}}</th>
-            </tr>
-            <tr v-for="r in rows">
-                <th class="table-dark" scope="row">{{r}}</th>
-                <td v-for="c in cols" :id="r+c"></td>
-            </tr>
+        
+        
+            <h1 class="title"> Game Information </h1>
+            <h2 class="well"> </h2>
+            <div class="alltables">
+            <div class="ships">
+               <div class="subtitle">
+                   <h2> {{players.player1}} </h2>
+               </div>
+                <table class="table table-bordered cell-hover">
+                    <tr>
+                        <th></th>
+                        <th class="table-dark" scope="col" v-for="key in cols"> {{key}}</th>
+                    </tr>
+                    <tr v-for="r in rows">
+                        <th class="table-dark" scope="row">{{r}}</th>
+                        <td v-for="c in cols" :id="'U'+r+c"></td>
+                    </tr>
 
-        </table>
+                </table>
+            </div>
+            <div class="salvoes">
+               <div class="subtitle">
+                   <h2> {{players.player2}} </h2>
+                   
+               </div>
+                <table class="table table-bordered">
+                    <tr>
+                        <th></th>
+                        <th class="table-light" v-for="key in cols"> {{key}}</th>
+                    </tr>
+                    <tr v-for="r in rows">
+                        <th class="table-light" scope="row">{{r}}</th>
+                        <td v-for="c in cols" :id="'E'+r+c"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 
 

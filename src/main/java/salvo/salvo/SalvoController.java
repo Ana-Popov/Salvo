@@ -41,8 +41,11 @@ public class SalvoController {
         gameView.put("user-id",gamePlayer.getId());
         gameView.put("game",makeGameDTO(gamePlayer.getGame()));
         gameView.put("ships",gamePlayer.getShips().stream()
-        .map(ship -> getShips(ship))
-        .collect(toList()));
+                                                    .map(ship -> getShips(ship))
+                                                    .collect(toList()));
+        gameView.put("user-salvoes", makeSalvoDTO(gamePlayer));
+        gameView.put("opponent-salvoes", makeSalvoDTO(getOpponent(gamePlayer)));
+
         return gameView;
 
     }
@@ -85,16 +88,24 @@ public class SalvoController {
         return dto;
     }
     public List<Object> makeSalvoDTO(GamePlayer gamePlayer){
-        List<Object> salvoList = new ArrayList<>();
-        Set<Salvo> salvos = gamePlayer.getSalvos();
-        for(Salvo salvo: salvos){
+        List<Object> list = new ArrayList<>();
+        Set<Salvo> salvoes = gamePlayer.getSalvoes();
+        for(Salvo salvo: salvoes){
             Map<String, Object> dto = new HashMap<>();
             dto.put("gamePlayer-id", salvo.getGamePlayer().getId());
             dto.put("turn", salvo.getTurn());
             dto.put("locations", salvo.getLocations());
-            salvoList.add(dto);
+            list.add(dto);
+
         }
-        return salvoList;
+        return list;
+}
+
+public GamePlayer getOpponent(GamePlayer gamePlayer){
+        return gamePlayer.getGame().getGamePlayers().stream()
+                .filter(gp -> gp != gamePlayer)
+                .findFirst()
+                .orElse(null);
 }
 
 }

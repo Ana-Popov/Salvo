@@ -74,7 +74,7 @@ public class SalvoApplication {
 
 			GamePlayer gamePlayer1 = new GamePlayer(player1, game1);
 			GamePlayer gamePlayer2 = new GamePlayer(player1, game2);
-			GamePlayer gamePlayer3 = new GamePlayer(player3, game2);
+			GamePlayer gamePlayer3 = new GamePlayer(player3, game1);
 			GamePlayer gamePlayer4 = new GamePlayer(player3, game2);
 			GamePlayer gamePlayer5 = new GamePlayer(player4, game3);
 			GamePlayer gamePlayer6 = new GamePlayer(player3, game4);

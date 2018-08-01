@@ -2,8 +2,6 @@ package salvo.salvo;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -26,7 +24,7 @@ public class GamePlayer {
 
 
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
-    Set<Salvo> salvos = new HashSet<>();
+    Set<Salvo> salvoes = new HashSet<>();
 
     public GamePlayer(){}
 
@@ -34,14 +32,10 @@ public class GamePlayer {
         this.player = player;
         this.game= game;
     }
-    public Set<Salvo> getSalvos(){
-        return salvos;
+    public Set<Salvo> getSalvoes(){
+        return salvoes;
     }
 
-    public void addSalvo(Salvo salvo){
-        salvo.setGamePlayer(this);
-        salvos.add(salvo);
-    }
 
     public long getId() {
         return id;

@@ -5,6 +5,7 @@ var app = new Vue({
         rows: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
         cols: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
         players: {},
+        hits: [],
     },
 
     created() {
@@ -25,29 +26,48 @@ var app = new Vue({
                     app.gameView = data;
                     app.displayShips();
                     app.getUsername();
+                app.displaySalvoes(data['user-salvoes'],'E')
+                app.displaySalvoes(data['opponent-salvoes'],'U')
                 })
         },
 
         displayShips: function () {
             let ships = app.gameView.ships;
-            for (var i = 0; i < ships.length; i++) {
+            for (let i = 0; i < ships.length; i++) {
                 for (let j = 0; j < ships[i].locations.length; j++) {
                     let shipLocation = ships[i].locations[j];
                     console.log(shipLocation);
                     //shiplocation id - dinamically calculates the id as you move on the grid with every cell - it's a special :id="r+c
-                    let cell = document.getElementById(shipLocation).classList.add("ship-location");
+                    let cell = document.getElementById('U' + shipLocation).classList.add("ship-location");
                 }
-
             }
         },
+
+        displaySalvoes: function (array, table) {
+            let salvoes = array;
+            for (var i = 0; i < salvoes.length; i++) {
+                let turn = salvoes[i].turn;
+                let locations = salvoes[i].locations;
+                for (let j = 0; j < locations.length; j++) {
+                    let salvoLocation = locations[j];
+                    let cell = document.getElementById(table + salvoLocation);
+                    cell.innerHTML = turn;
+                    cell.classList.add("salvo-location");
+                    if (cell.classList.contains("ship-location")) {
+                        cell.classList.add("hit");
+                    }
+                }
+            }
+
+        },
+
         getUsername: function () {
             let gamePlayers = app.gameView.game.gamePlayers;
             let player1 = gamePlayers["0"].player.email;
             let player2;
-            if (gamePlayers[1].player.email){
-             player2 = gamePlayers[1].player.email;
-            }
-            else{
+            if (gamePlayers[1].player.email) {
+                player2 = gamePlayers[1].player.email;
+            } else {
                 player1 = gamePlayers["0"].player.email;
                 player2 = '';
             }
