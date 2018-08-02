@@ -22,6 +22,8 @@ public class SalvoController {
     private ShipRepository shipRepository;
     @Autowired
     private SalvoRepository salvoRepository;
+    @Autowired
+    private ScoreRepository scoreRepository;
 
     @RequestMapping("/games")
     public List<Object> getAllIds() {

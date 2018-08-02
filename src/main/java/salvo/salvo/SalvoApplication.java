@@ -22,7 +22,9 @@ public class SalvoApplication {
 	public CommandLineRunner initData(PlayerRepository playerRepository,
 									  GameRepository gameRepository,
 									  GamePlayerRepository gamePlayerRepository,
-                                      ShipRepository shipRepository, SalvoRepository salvoRepository) {
+                                      ShipRepository shipRepository,
+									  SalvoRepository salvoRepository,
+									  ScoreRepository scoreRepository) {
 		return (args) -> {
 			//save a few players
 			Player player1 = new Player("j.bauer@ctu.go");
@@ -74,11 +76,11 @@ public class SalvoApplication {
 
 			GamePlayer gamePlayer1 = new GamePlayer(player1, game1);
 			GamePlayer gamePlayer2 = new GamePlayer(player1, game2);
-			GamePlayer gamePlayer3 = new GamePlayer(player3, game1);
+				GamePlayer gamePlayer3 = new GamePlayer(player3, game1);
 			GamePlayer gamePlayer4 = new GamePlayer(player3, game2);
 			GamePlayer gamePlayer5 = new GamePlayer(player4, game3);
 			GamePlayer gamePlayer6 = new GamePlayer(player3, game4);
-			GamePlayer gamePlayer7 = new GamePlayer(player4, game3);
+			GamePlayer gamePlayer7 = new GamePlayer(player1, game3);
 			GamePlayer gamePlayer8 = new GamePlayer(player2, game5);
 			GamePlayer gamePlayer9 = new GamePlayer(player1, game5);
 			GamePlayer gamePlayer10 = new GamePlayer(player3, game6);
@@ -177,6 +179,23 @@ public class SalvoApplication {
             salvoRepository.save(salvo7);
             salvoRepository.save(salvo8);
             salvoRepository.save(salvo9);
+
+            Date finishDate1 = new Date();
+
+            Score score1 = new Score(game1,player1, 1.0,finishDate1);
+            Score score2 = new Score(game1,player3, 0.0,finishDate1);
+            Score score3 = new Score(game2,player1, 0.5,finishDate1);
+            Score score4 = new Score(game2,player3, 0.5,finishDate1);
+            Score score5 = new Score(game3,player4, 0.0,finishDate1);
+            Score score6 = new Score(game3,player1, 1.0,finishDate1);
+
+            scoreRepository.save(score1);
+            scoreRepository.save(score2);
+            scoreRepository.save(score3);
+            scoreRepository.save(score4);
+			scoreRepository.save(score5);
+            scoreRepository.save(score6);
+
 
         };
 	}
