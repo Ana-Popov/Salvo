@@ -5,21 +5,25 @@ import java.util.Date;
 
 @Entity
 public class Score {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id")
     private Game game;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id")
     private Player player;
+
     private Double score;
     private Date finishDate;
 
     public Score(){}
 
-    public Score(Game gameId,Player playerId, Double score, Date finishDate ){
+    public Score(Game game,Player player, Double score, Date finishDate ){
     this.game = game;
     this.player=player;
     this.score=score;
@@ -54,6 +58,7 @@ public class Score {
     public void setScore(Double score) {
         this.score = score;
     }
+
 
     public void setFinishDate(Date finishDate) {
         this.finishDate = finishDate;

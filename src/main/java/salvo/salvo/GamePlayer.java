@@ -70,4 +70,9 @@ public class GamePlayer {
         ship.setGamePlayer(this);
         ships.add(ship);
     }
+
+    public Score getScore () {
+        return  player.getScores().stream().filter(score -> score.getGame() == game).findFirst().orElse(null);
+//        return  player.getScore(game);
+    }
 }

@@ -18,13 +18,22 @@ public class Game {
     Set<GamePlayer> gamePlayers;
 
     @OneToMany(mappedBy="game", fetch = FetchType.EAGER)
-    Set<Score> scores = new HashSet<>();
+    Set<Score> scores;
 
     public void addGamePlayer(GamePlayer gamePlayer){
         gamePlayer.setGame(this);
         gamePlayers.add(gamePlayer);
+
     }
 
+    public Set<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(Set<Score> scores) {
+        this.scores = scores;
+
+    }
 
     public List<Player> getPlayers(){
         return gamePlayers.stream().map(sub -> sub.getPlayer()).collect(toList());

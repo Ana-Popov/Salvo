@@ -3,10 +3,7 @@ package salvo.salvo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,6 +17,9 @@ public class Player {
 
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     Set<GamePlayer> gamePlayers;
+
+    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
+    Set<Score> scores;
 
     public void addGamePlayers(GamePlayer gamePlayer){
         gamePlayer.setPlayer(this);
@@ -47,6 +47,38 @@ public class Player {
 
     public long getId() {
         return id;
+    }
+
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
+
+    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
+        this.gamePlayers = gamePlayers;
+    }
+
+    public Set<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(Set<Score> scores) {
+        this.scores = scores;
+    }
+    public  Score getScore (Game game) {
+//        List<Score> scoreList = new ArrayList<>();
+//        for (Score score : scores) {
+//            if (score.getGame() == game) {
+//                scoreList.add(score);
+//            }
+//        }
+//        if (!scoreList.isEmpty()) {
+//            return scoreList.get(0);
+//        } else {
+//            return null;
+//        }
+
+        return scores.stream().filter(score -> score.getGame() == game).findFirst().orElse(null);
+
     }
 }//end
 
