@@ -9,17 +9,26 @@ body{
 
 table{
     border-collapse: separate;
+    border-color: brown;
+}
+#content{
+    background-image: url(irish%20decor2.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    
 }
 
 .alltables {
     display: inline-flex;
+   
 }
 
 .ships, .salvoes{
     flex-direction: column;
     justify-content: space-around;
     width: 60%;
-     background: linear-gradient(to right, rgba(63, 127, 191), rgba(255,0,59,0));
+   
     
 }
 

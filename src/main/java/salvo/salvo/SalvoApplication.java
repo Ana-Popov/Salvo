@@ -1,9 +1,16 @@
 package salvo.salvo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -27,11 +34,11 @@ public class SalvoApplication {
 									  ScoreRepository scoreRepository) {
 		return (args) -> {
 			//save a few players
-			Player player1 = new Player("j.bauer@ctu.go");
-			Player player2 = new Player("c.obrien@ctu.gov");
+			Player player1 = new Player("j.bauer@ctu.go", "24");
+			Player player2 = new Player("c.obrien@ctu.gov", "42");
 //			player2.setUserName("c.obrien@ctu.gov");
-			Player player3 = new Player("kim_bauer@gmail.com");
-			Player player4 = new Player("t.almeida@ctu.gov");
+			Player player3 = new Player("kim_bauer@gmail.com","kb");
+			Player player4 = new Player("t.almeida@ctu.gov", "mole");
 
 
 			playerRepository.save(player1);
@@ -82,7 +89,7 @@ public class SalvoApplication {
 
 			GamePlayer gamePlayer1 = new GamePlayer(player1, game1);
 			GamePlayer gamePlayer2 = new GamePlayer(player1, game2);
-				GamePlayer gamePlayer3 = new GamePlayer(player3, game1);
+			GamePlayer gamePlayer3 = new GamePlayer(player3, game1);
 			GamePlayer gamePlayer4 = new GamePlayer(player3, game2);
 			GamePlayer gamePlayer5 = new GamePlayer(player4, game3);
 			GamePlayer gamePlayer6 = new GamePlayer(player3, game4);
@@ -204,4 +211,25 @@ public class SalvoApplication {
 
         };
 	}
+}
+
+@Configuration
+class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter{
+
+	@Autowired
+	PlayerRepository playerRepository;
+
+	@Override
+	public void init(AuthenticationManagerBuilder auth) throws Exception{
+		auth.userDetailsService(username -> {
+			Player player = playerRepository.findByUserName(username);
+			if( player != null){
+				return new User(player.getUserName(), player.getPassword(),
+						AuthorityUtils.createAuthorityList("USER"));
+			} else {
+				throw new UsernameNotFoundException("Unknown user: " + username);
+			}
+		});
+	}
+
 }
