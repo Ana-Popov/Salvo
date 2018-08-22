@@ -5,41 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="game.css">
     <title> Games </title>
 </head>
 
 <body>
     <div id="app">
-       <div class="header"> 
-       <div class="jumbotron">
-           <div class="logo" src="Free_Logo_Maker_-_Get_Custom_Logo_Designs_in_Minutes___Logojoy.png"> </div>
-       </div>
-       </div>
+        <div class="header">
+            <div class="jumbotron">
+                <div class="logo" src="Free_Logo_Maker_-_Get_Custom_Logo_Designs_in_Minutes___Logojoy.png"> </div>
+            </div>
+        </div>
+        <form id="login-form" onsubmit="return false">
+            <label>Name: <input type="text" name="username"></label>
+            <label>Password: <input type="text" name="password"></label>
+        </form>
+
+        <form id="logout-form" onsubmit="return false">
+            <button>Log in</button>
+        </form>
         <h1> Leaderboard </h1>
-<div class="leaderboard">
-    <table class="table table-hover">
-        <thead> 
-        <th class="name"> Name </th>
-        <th class="total"> Total </th>
-        <th class="won"> Won </th>
-        <th class="lost"> Lost </th>
-        <th class="tie"> Tie </th>
-        </thead>
-         
-        <tr v-for ="player in players">
-        <th> {{player.player}}</th> 
-        <th> {{player.total}}</th> 
-        <th> {{player.win}}</th> 
-        <th> {{<player class="lose"></player>}}</th> 
-        <th> {{player.tie}}</th> 
-        
-        </tr>
-    </table>
-    
-</div>
-<!--
+        <div class="leaderboard">
+            <table class="table table-hover">
+                <thead>
+                    <th class="name"> Name </th>
+                    <th class="total"> Total </th>
+                    <th class="won"> Won </th>
+                    <th class="lost"> Lost </th>
+                    <th class="tie"> Tie </th>
+                </thead>
+
+                <tr v-for="player in players">
+                    <th> {{player.player}}</th>
+                    <th> {{player.total}}</th>
+                    <th> {{player.win}}</th>
+                    <th> {{player.lose}}</th>
+                    <th> {{player.tie}}</th>
+
+                </tr>
+            </table>
+
+        </div>
+        <!--
         <h1> Games </h1>
         <ol id="allGames">
             <li id="everyGame" v-for="game in games">

@@ -1,6 +1,8 @@
 package salvo.salvo;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +28,21 @@ public class SalvoController {
     private ScoreRepository scoreRepository;
 
     @RequestMapping("/games")
-    public List<Object> getAllIds() {
+    private Map<String, Object> getUser(Authentication authentication){
+        Map<String, Object> authUser = new LinkedHashMap<>();
+        if (authentication != null) {
+            Player player = playerRepository.findByUserName(authentication.getName());
+            authUser.put("player", makePlayerDTO(player));
+            authUser.put("game", displayAllGames());
+        } else {
+            authUser.put("game", displayAllGames());
+        }
+
+        return authUser;
+
+    }
+
+    public List<Object> displayAllGames() {
     //this method loops through all the Games and returns only the info I need - using the method below for - id and creation date.
         List<Game> games = gameRepository.findAll();
         List<Object> list = new ArrayList<>();
@@ -116,6 +132,8 @@ public class SalvoController {
 //                                            .orElse(null));
         return dto;
     }
+
+
 
     public Map<String, Object> makeGamePlayerDTO(GamePlayer gamePlayer){
         Map<String, Object> dto = new LinkedHashMap<String, Object>();

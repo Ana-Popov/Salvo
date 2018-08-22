@@ -12,7 +12,6 @@ var app = new Vue({
     created() {
         this.fetchData();
     },
-
     methods: {
         fetchData: function () {
             let url = '/api/leaderboard';
@@ -23,70 +22,114 @@ var app = new Vue({
                 .then((response) => response.json())
                 .then(function (data) {
                     console.log(data)
-                    app.players = data.sort((a,b) => b.total - a.total);
-    
+                    app.players = data.sort((a, b) => b.total - a.total);
+
                 })
         },
-        
-//            for(var i = 0; i< players.length; i++){
-//                let wins = players[i].win;
-//                let tie = players[i].tie;
-//                wins.sort(function(a, b){
-//                    return a-b});
-//                } this.win = wins;
-//            }
-        
-    }
+        login: function () {
+            fetch("/api/login", {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'userName=' + username + '&password=' + password,
+                })
+                .then((response) => response.json())
+                .then(function (data) {
+                    console.log(data)
+                        .catch(function (fail) {
+                            console.log("error")
+                        })
+                })
+        },
 
- //end methods
 
-    //fetch - api/games START
-    //        fetchData: function () {
-    //            let url = '/api/games';
-    //            fetch(url, {
-    //                method: "GET",
-    //                credentials: "include",
-    //            })
-    //                .then((response) => response.json())
-    //                .then(function (data) {
-    //                    console.log(data)
-    //                    app.gamesJson = data;
-    //                    app.getGames();
-    //                })
-    //        },
-    //        getGames: function () {
-    //            let array = [];
-    //            let games = this.gamesJson;
-    //            let playerTwo = "";
-    //            let playerOne = "";
-    ////            let player2 = "";
-    //            for (var i = 0; i < games.length; i++) {
-    //                let date = new Date(games[i].created);
-    //                dates = date.toLocaleString();
-    //                if (games[i].gamePlayers.length > 1) {
-    //                    playerOne = games[i].gamePlayers[0].player.email + " vs ";
-    //                    playerTwo = games[i].gamePlayers[1].player.email;
-    ////                    playerTwo = " vs " + player2;
-    ////                    let playerTwo = " vs " + player2;
-    //                } else {
-    //                    playerOne = games[i].gamePlayers[0].player.email;
-    //                   playerTwo = "";
-    //
-    //                }
-    //                
-    //                let object = {
-    //                    created: dates,
-    //                    playerOne: playerOne,
-    //                    playerTwo: playerTwo,
-    //                }
-    //                array.push(object);
-    //                console.log(object)
+        //        login: function (evt) {
+        //            evt.preventDefault();
+        //            var form = evt.target.form;
+        //            $.post("/api/login", {
+        //                    username: form["username"].value,
+        //                    password: form["password"].value
+        //                })
+        //                .done(function (d) {
+        //                    console.log(d)
+        //                })
+        //                .fail(function (d) {
+        //                    console.log(d)
+        //                });
+        //        },
+        //        logout: function (evt) {
+        //            evt.preventDefault();
+        //            $.post("/api/logout")
+        //                .done(function (d) {
+        //                    console.log(d)
+        //                })
+        //                .fail(function (d) {
+        //                    console.log(d)
+        //                });
+    },
+
+    //            for(var i = 0; i< players.length; i++){
+    //                let wins = players[i].win;
+    //                let tie = players[i].tie;
+    //                wins.sort(function(a, b){
+    //                    return a-b});
+    //                } this.win = wins;
     //            }
-    //            this.games = array;
-    //
-    //        },
-    //
-    //    } //END api/games fetch 
+
+
+
+//end methods
+
+//fetch - api/games START
+//        fetchData: function () {
+//            let url = '/api/games';
+//            fetch(url, {
+//                method: "GET",
+//                credentials: "include",
+//            })
+//                .then((response) => response.json())
+//                .then(function (data) {
+//                    console.log(data)
+//                    app.gamesJson = data;
+//                    app.getGames();
+//                })
+//        },
+//        getGames: function () {
+//            let array = [];
+//            let games = this.gamesJson;
+//            let playerTwo = "";
+//            let playerOne = "";
+////            let player2 = "";
+//            for (var i = 0; i < games.length; i++) {
+//                let date = new Date(games[i].created);
+//                dates = date.toLocaleString();
+//                if (games[i].gamePlayers.length > 1) {
+//                    playerOne = games[i].gamePlayers[0].player.email + " vs ";
+//                    playerTwo = games[i].gamePlayers[1].player.email;
+////                    playerTwo = " vs " + player2;
+////                    let playerTwo = " vs " + player2;
+//                } else {
+//                    playerOne = games[i].gamePlayers[0].player.email;
+//                   playerTwo = "";
+//
+//                }
+//                
+//                let object = {
+//                    created: dates,
+//                    playerOne: playerOne,
+//                    playerTwo: playerTwo,
+//                }
+//                array.push(object);
+//                console.log(object)
+//            }
+//            this.games = array;
+//
+//        },
+//
+//    } //END api/games fetch 
 
 }); //end Vue
 
