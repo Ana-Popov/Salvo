@@ -7,9 +7,15 @@ var app = new Vue({
         players: [],
         win: 0,
         lose: 0,
-        total: 0
+        total: 0,
+        userName: '',
+        password: '',
+        message: '',
+        isLoggedIn: false,
+        status: [],
     },
     created() {
+        this.getGames();
         this.fetchData();
     },
     methods: {
@@ -34,16 +40,45 @@ var app = new Vue({
                         'Accept': 'application/json',
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: 'userName=' + username + '&password=' + password,
+                    body: 'userName=' + this.userName + '&password=' + this.password,
+                })
+                .then(function (data) {
+                    app.status = data;
+                    if (app.status.status == 200) {
+                        app.message = 'Welcome' + app.userName;
+                        app.getGames();
+                    } else {
+                        app.message = 'Login failed. Please try again';
+                    }
+                    console.log(app.userName);
+                    console.log(data)
+                })
+                .catch(function (fail) {
+                    console.log("error")
+                })
+        },
+        getGames: function () {
+            let url = '/api/games';
+            fetch(url, {
+                    method: "GET",
+                    credentials: "include",
                 })
                 .then((response) => response.json())
                 .then(function (data) {
                     console.log(data)
-                        .catch(function (fail) {
-                            console.log("error")
-                        })
+                    if (data.player) {
+                        app.isLoggedIn = true;
+                    } else {
+                        app.isLoggedIn = false;
+                    }
+
                 })
         },
+        
+        logout: function(){
+            fetch("/api/logout")
+        }
+
 
 
         //        login: function (evt) {
@@ -81,55 +116,55 @@ var app = new Vue({
 
 
 
-//end methods
+    //end methods
 
-//fetch - api/games START
-//        fetchData: function () {
-//            let url = '/api/games';
-//            fetch(url, {
-//                method: "GET",
-//                credentials: "include",
-//            })
-//                .then((response) => response.json())
-//                .then(function (data) {
-//                    console.log(data)
-//                    app.gamesJson = data;
-//                    app.getGames();
-//                })
-//        },
-//        getGames: function () {
-//            let array = [];
-//            let games = this.gamesJson;
-//            let playerTwo = "";
-//            let playerOne = "";
-////            let player2 = "";
-//            for (var i = 0; i < games.length; i++) {
-//                let date = new Date(games[i].created);
-//                dates = date.toLocaleString();
-//                if (games[i].gamePlayers.length > 1) {
-//                    playerOne = games[i].gamePlayers[0].player.email + " vs ";
-//                    playerTwo = games[i].gamePlayers[1].player.email;
-////                    playerTwo = " vs " + player2;
-////                    let playerTwo = " vs " + player2;
-//                } else {
-//                    playerOne = games[i].gamePlayers[0].player.email;
-//                   playerTwo = "";
-//
-//                }
-//                
-//                let object = {
-//                    created: dates,
-//                    playerOne: playerOne,
-//                    playerTwo: playerTwo,
-//                }
-//                array.push(object);
-//                console.log(object)
-//            }
-//            this.games = array;
-//
-//        },
-//
-//    } //END api/games fetch 
+    //fetch - api/games START
+    //        fetchData: function () {
+    //            let url = '/api/games';
+    //            fetch(url, {
+    //                method: "GET",
+    //                credentials: "include",
+    //            })
+    //                .then((response) => response.json())
+    //                .then(function (data) {
+    //                    console.log(data)
+    //                    app.gamesJson = data;
+    //                    app.getGames();
+    //                })
+    //        },
+    //        getGames: function () {
+    //            let array = [];
+    //            let games = this.gamesJson;
+    //            let playerTwo = "";
+    //            let playerOne = "";
+    ////            let player2 = "";
+    //            for (var i = 0; i < games.length; i++) {
+    //                let date = new Date(games[i].created);
+    //                dates = date.toLocaleString();
+    //                if (games[i].gamePlayers.length > 1) {
+    //                    playerOne = games[i].gamePlayers[0].player.email + " vs ";
+    //                    playerTwo = games[i].gamePlayers[1].player.email;
+    ////                    playerTwo = " vs " + player2;
+    ////                    let playerTwo = " vs " + player2;
+    //                } else {
+    //                    playerOne = games[i].gamePlayers[0].player.email;
+    //                   playerTwo = "";
+    //
+    //                }
+    //                
+    //                let object = {
+    //                    created: dates,
+    //                    playerOne: playerOne,
+    //                    playerTwo: playerTwo,
+    //                }
+    //                array.push(object);
+    //                console.log(object)
+    //            }
+    //            this.games = array;
+    //
+    //        },
+    //
+    //    } //END api/games fetch 
 
 }); //end Vue
 

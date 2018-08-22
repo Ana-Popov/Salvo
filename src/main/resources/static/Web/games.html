@@ -17,14 +17,26 @@
                 <div class="logo" src="Free_Logo_Maker_-_Get_Custom_Logo_Designs_in_Minutes___Logojoy.png"> </div>
             </div>
         </div>
-        <form id="login-form" onsubmit="return false">
-            <label>Name: <input type="text" name="username"></label>
-            <label>Password: <input type="text" name="password"></label>
+        <div class="welcomemsg">
+            <h1> {{message}}</h1>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" v-if="isLoggedIn">Logout</button>
+        <form class="form-inline" @submit.prevent="login"  v-if="!isLoggedIn">
+            <div class="form-group">
+                <label class="sr-only" for="inputEmail">Email</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email" v-model="userName">
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="inputPassword">Password</label>
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password" v-model="password">
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox"> Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
 
-        <form id="logout-form" onsubmit="return false">
-            <button>Log in</button>
-        </form>
         <h1> Leaderboard </h1>
         <div class="leaderboard">
             <table class="table table-hover">
@@ -64,8 +76,6 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script type="text/javascript" src="games.js">
-
-
     </script>
 </body>
 

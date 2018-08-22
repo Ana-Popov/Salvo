@@ -1,11 +1,13 @@
 package salvo.salvo;
 
 
+import org.apache.catalina.User;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -51,6 +53,41 @@ public class SalvoController {
         }
         return list;
     }
+//    @RequestMapping(value="/login", method = RequestMethod.GET)
+//    @ResponseBody
+//    public String getUserName(HttpServletRequest request){
+//        return request.getUserPrincipal().getName();
+//    }
+
+
+    @RequestMapping(path = "/players", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> createPlayer(@RequestParam String userName, String password){
+        if(userName.isEmpty()){
+            return new ResponseEntity<>(makeMap("error", "Please enter your username"), HttpStatus.FORBIDDEN);
+        } else if(password.isEmpty()){
+            return new ResponseEntity<>(makeMap("error", "Please enter your password"), HttpStatus.FORBIDDEN);
+        } else {
+            Player player = playerRepository.findByUserName(userName);
+            if (player != null) {
+                return new ResponseEntity<>(makeMap("error", "Username already exists"), HttpStatus.CONFLICT);
+            } else {
+                Player newPlayer = playerRepository.save(new Player(userName,password));
+                return new ResponseEntity<>(makeMap("id", newPlayer.getId()), HttpStatus.CREATED);
+            }
+        }
+    }
+
+
+    private Map<String, Object> makeMap(String key, Object value){
+        Map<String, Object> map = new HashMap<>();
+        map.put(key, value);
+        return map;
+    }
+
+//    @RequestMapping(value = "/", method = RequestMethod.POST)
+//    public ResponseEntity<Player> update(@RequestBody Player player){
+//
+//    }
 
     @RequestMapping("/leaderboard")
     public List<Object> getLeaderboad(){
