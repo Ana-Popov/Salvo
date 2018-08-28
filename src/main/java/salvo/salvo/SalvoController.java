@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
@@ -71,6 +72,7 @@ public class SalvoController {
             if (player != null) {
                 return new ResponseEntity<>(makeMap("error", "Username already exists"), HttpStatus.CONFLICT);
             } else {
+
                 Player newPlayer = playerRepository.save(new Player(userName,password));
                 return new ResponseEntity<>(makeMap("id", newPlayer.getId()), HttpStatus.CREATED);
             }
@@ -160,7 +162,7 @@ public class SalvoController {
         return dto;
     }
 
-    public Map<String, Object> makePlayerDTO(Player player){
+    public Map<String, Object> makePlayerDTO(@Valid @RequestBody Player player){
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", player.getId());
         dto.put("email", player.getUserName());
@@ -171,10 +173,9 @@ public class SalvoController {
     }
 
 
-
     public Map<String, Object> makeGamePlayerDTO(GamePlayer gamePlayer){
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
-        dto.put("id", gamePlayer.getId());
+        dto.put("gpId", gamePlayer.getId());
         dto.put("player", makePlayerDTO(gamePlayer.getPlayer()));
         dto.put("score", makeScoreDto(gamePlayer));
         return dto;
@@ -232,4 +233,34 @@ public GamePlayer getOpponent(GamePlayer gamePlayer){
 //    return list;
 //}
 }
+
+
+
+
+
+
+
+
+
+
+//@RequestMapping(path = "/awesomecareer", method = RequestMethod.GET)
+//    public ResponseEntity<Map<String, Object>> getAna(@RequestParam String experience, String ambition){
+//        if(experience.contains(java, "springBoot", "javaScript", "html", "css", "firebase", "vueJs", "jQuery"){
+//            return new ResponseEntity<>(makeMap("match", "Great value to add to your company"), HttpStatus.FOUND);
+//         }
+//         else if(ambition.concat(String "flexibility", "social skills", "dedication", "learning desire & development"){
+//            return new ResponseEntity<>(makeMap("success", ""), HttpStatus.FORBIDDEN);
+//         }
+//         else {
+//            Player player = playerRepository.findByUserName(userName);
+//            if (player != null) {
+//            return new ResponseEntity<>(makeMap("error", "Username already exists"), HttpStatus.CONFLICT);
+//             }
+//            else {
+//            Player newPlayer = playerRepository.save(new Player(userName,password));
+//            return new ResponseEntity<>(makeMap("id", newPlayer.getId()), HttpStatus.CREATED);
+//            }
+//        }
+//}
+
 

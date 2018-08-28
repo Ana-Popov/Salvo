@@ -1,8 +1,12 @@
 package salvo.salvo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
@@ -13,7 +17,15 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @NotNull
+    @Size(min = 5, message = "Email should have at least 5 characters", max = 100)
+//    @Email(message = "Please provide an email address")
+//    @Pattern(regexp="^([a-zA-Z0-9\\-\\.\\_]+)'+'(\\@)([a-zA-Z0-9\\-\\.]+)'+'(\\.)([a-zA-Z]{2,4})$")
     private String userName;
+
+    @NotNull
+    @Size(min = 2, message = "Passwords should have at least 2 characters and maxim 12", max = 12)
     private String password;
 
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)

@@ -18,11 +18,12 @@
             </div>
         </div>
         <div class="welcomemsg">
-            <h1> {{message}}</h1>
+<!--            <h1> {{message}}</h1>-->
         </div>
         
-        <button type="submit" class="btn btn-primary" v-if="isLoggedIn">Logout</button>
-        <form class="form-inline" @submit.prevent="login"  v-if="!isLoggedIn">
+        <button type="submit" class="btn btn-primary" v-if="isLoggedIn" v-on:click="logout">Logout</button>
+        <div class="form-inline" v-if="!isLoggedIn">{{message}}
+<!--            @submit.prevent="login" -->
             <div class="form-group">
                 <label class="sr-only" for="inputEmail">Email</label>
                 <input type="email" class="form-control" id="inputEmail" placeholder="Email" v-model="userName">
@@ -31,11 +32,12 @@
                 <label class="sr-only" for="inputPassword">Password</label>
                 <input type="password" class="form-control" id="inputPassword" placeholder="Password" v-model="password">
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox"> Remember me</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+            <button type="submit" class="btn btn-primary" v-on:click="login">Login</button>
+                <div class="signingUp"> 
+<!--                    <label class="SignUp"> Not registered yet, no problem </label>-->
+                    <button type="signup" class="btn btn-secondary" v-on:click="signUp"> Signup</button>
+                </div>
+        </div>
 
         <h1> Leaderboard </h1>
         <div class="leaderboard">
@@ -59,21 +61,25 @@
             </table>
 
         </div>
-        <!--
+        
         <h1> Games </h1>
         <ol id="allGames">
             <li id="everyGame" v-for="game in games">
-
-                {{game.created}} - {{game.playerOne}}{{game.playerTwo}}
-
-
-
+                <p> {{game.created}} - {{game.playerOne}}
+                 {{game.playerTwo}} </p>
+                <span v-if="game.status == 'Play'">
+                <a :href="'game.html?gp='+game.playerOneId">{{game.status}}</a>
+                </span>
+                <span v-if="game.status != 'Play'">
+                    <p>{{game.status}}</p>
+                </span>
+           
             </li>
         </ol>
--->
+
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script type="text/javascript" src="games.js">
     </script>
