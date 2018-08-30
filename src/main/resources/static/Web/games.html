@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="welcomemsg">
-<!--            <h1> {{message}}</h1>-->
+            <h1> {{message}}</h1>
         </div>
         
         <button type="submit" class="btn btn-primary" v-if="isLoggedIn" v-on:click="logout">Logout</button>
@@ -63,6 +63,11 @@
         </div>
         
         <h1> Games </h1>
+        <ul id="newGame">
+           <li v-for=""></li>
+            <button type="button" class="createGame btn btn-danger" v-on:click="newGame"> New Game</button>
+        </ul>
+        
         <ol id="allGames">
             <li id="everyGame" v-for="game in games">
                 <p> {{game.created}} - {{game.playerOne}}
@@ -70,7 +75,10 @@
                 <span v-if="game.status == 'Play'">
                 <a :href="'game.html?gp='+game.playerOneId">{{game.status}}</a>
                 </span>
-                <span v-if="game.status != 'Play'">
+                <span v-if="game.status == 'Join'"> 
+                <a :href="'game.html?gp='+game.playerOneId"> {{game.status}}</a>
+                </span>
+                <span v-if="game.status == 'IN GAME'">
                     <p>{{game.status}}</p>
                 </span>
            

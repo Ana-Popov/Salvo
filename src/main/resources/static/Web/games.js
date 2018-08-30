@@ -4,6 +4,7 @@ var app = new Vue({
     data: {
         leaderboard: [],
         games: [],
+        createGame: [],//this contains the new Game data 
         players: [],
         win: 0,
         lose: 0,
@@ -43,184 +44,223 @@ var app = new Vue({
                     }
 
                     app.getGames();
-                    app.message="Please log in to play a game";
-
 
                 })
         },
-        fetchLeaderboard: function () {
-            let url = "/api/leaderboard";
-            fetch(url, {
-                    method: "GET",
+        newGame: function () {
+            fetch("/api/games", {
                     credentials: "include",
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
                 })
                 .then((response) => response.json())
                 .then(function (data) {
-                    console.log(data)
-                    app.players = data.sort((a, b) => b.total - a.total);
-                })
-        },
+                        app.createGame = data;
+                        console.log(app.createGame);
+                    })
+                    //
+                    //    } //END api/games fetch 
+                
+    },
 
-        login: function () {
-            fetch("/api/login", {
-                    credentials: 'include',
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'userName=' + this.userName + '&password=' + this.password,
-                })
-                .then(function (data) {
+    fetchLeaderboard: function () {
+        let url = "/api/leaderboard";
+        fetch(url, {
+                method: "GET",
+                credentials: "include",
+            })
+            .then((response) => response.json())
+            .then(function (data) {
+                console.log(data)
+                app.players = data.sort((a, b) => b.total - a.total);
+            })
+    },
+
+    login: function () {
+        fetch("/api/login", {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'userName=' + this.userName + '&password=' + this.password,
+            })
+            .then(function (data) {
+                if (data.status == 200) {
                     if (data.player = !null) {
                         app.getData();
                         app.message = "Welcome " + app.userName;
-                    } else {
-                        app.message = 'Login failed. Please try again';
                     }
-                    console.log(app.userName);
-                    console.log(data)
-
-                })
-                .catch(function (fail) {
-                    console.log("error")
-                })
-        },
-
-
-        getPlayerUrl: function () {
-            var stateObject = {
-                id: app.loggedPlayer
-            };
-            var title = "Game View" + app.loggedPlayer;
-            var newUrl = "/web/game.html?gp=" + app.loggedPlayer;
-            history.pushState(stateObject, title, newUrl);
-        },
-
-        logout: function () {
-            fetch("/api/logout", {
-                    credentials: "include",
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'userName=' + this.userName + '&password=' + this.password,
-                })
-                .then(function (data) {
-                    app.status = data;
-                    app.message = "Please log in to play a game";
-                    app.isLoggedIn = false;
-                })
-                .catch(function (fail) {
-                    console.log("error")
-                })
-        },
-
-        signUp: function () {
-            fetch("/api/players", {
-                    credentials: "include",
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'userName=' + this.userName + '&password=' + this.password,
-                })
-                .then(function (data) {
-                    console.log(data)
-                    if (data.status == 201) {
-                        app.isLoggedIn = true;
-                        app.login();
-                        app.message='Welcome ' + this.userName;
-                    } else {
-                        app.message = 'Information incomplete. Please try again';
-                    }
-                })
-        },
-
-        //        fetchData: function () {
-        //            let url = '/api/games';
-        //            fetch(url, {
-        //                    method: "GET",
-        //                    credentials: "include",
-        //                })
-        //                .then((response) => response.json())
-        //                .then(function (data) {
-        //                    console.log(data)
-        //                    app.gamesJson = data;
-        //                    app.getGames();
-        //                })
-        //        },
-
-
-        getGames: function () {
-            let array = [];
-            let games = this.status.game;
-            let playerTwo = "";
-            let playerOne = "";
-            let playerOneId = "";
-            let playerTwoId = "";
-            let status = "";
-            //            let player2 = "";
-            for (var i = 0; i < games.length; i++) {
-                let date = new Date(games[i].created);
-                let gp = games[i].gamePlayers;
-                console.log(gp);
-                let dates = date.toLocaleString();
-                if ((gp.length == 2 && gp[0].player.id == this.loggedPlayer)) {
-                    status = "Play";
-                    playerOneId = gp[0].gpId;
-                    playerOne = gp[0].player.email + ' vs';
-                    playerTwo = gp[1].player.email;
-                    playerTwoId = gp[1].gpId;
-
-                } else if (gp.length == 2 && gp[1].player.id == this.loggedPlayer) {
-                    status = "Play"
-                    playerOneId = gp[1].gpId;
-                    playerOne = gp[1].player.email + ' vs';
-                    playerTwo = gp[0].player.email;
-                    playerTwoId = gp[0].gpId;
-                } else if (gp.length == 1 && gp[0].player.id == this.loggedPlayer) {
-                    status = "Play"
-                    playerOne = gp[0].player.email;
-                    playerTwo = "";
-                    playerOneId = gp[0].player.id;
-                    playerTwoId = "";
-
-                } else if (gp.length == 1 && gp[0].player.id != this.loggedPlayer) {
-                    status = "Join";
-                    playerOne = gp[0].player.email;
-                    playerTwo = "";
-                    playerOneId = gp[0].player.id;
-                    playerTwoId = "";
-
-                } else {
-                    status = "IN GAME";
-                    playerOneId = gp[0].gpId;
-                    playerOne = gp[0].player.email + ' vs';
-                    playerTwo = gp[1].player.email;
-                    playerTwoId = gp[1].gpId;
+                } else if (data.status == 401) {
+                    app.message = 'Incorrect username or password';
                 }
-                console.log(status);
-                let object = {
-                    created: dates,
-                    playerOne: playerOne,
-                    playerTwo: playerTwo,
-                    playerOneId: playerOneId,
-                    playerTwoId: playerTwoId,
-                    status: status,
 
-                };
-                array.push(object);
+                console.log(app.userName);
+                console.log(data)
 
+            })
+            .catch(function (fail) {
+                console.log("error")
+            })
+    },
+
+
+    getPlayerUrl: function () {
+        var stateObject = {
+            id: app.loggedPlayer
+        };
+        var title = "Game View" + app.loggedPlayer;
+        var newUrl = "/web/game.html?gp=" + app.loggedPlayer;
+        history.pushState(stateObject, title, newUrl);
+    },
+
+    logout: function () {
+        fetch("/api/logout", {
+                credentials: "include",
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'userName=' + this.userName + '&password=' + this.password,
+            })
+            .then(function (data) {
+                app.status = data;
+                app.message = "Please log in to play a game";
+                app.isLoggedIn = false;
+            })
+            .catch(function (fail) {
+                console.log("error")
+            })
+    },
+
+    signUp: function () {
+        fetch("/api/players", {
+                credentials: "include",
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'userName=' + this.userName + '&password=' + this.password,
+            })
+            .then(function (data) {
+                console.log(data)
+                if (data.status == 201) {
+                    app.isLoggedIn = true;
+                    app.getGames();
+                    app.login();
+                    app.message = 'Welcome ' + this.userName;
+
+                } else if (data.status == 409) {
+                    app.message = "User already exists";
+                } else if (data.status == 401) {
+                    app.message = "Incorrect username or password";
+                } else {
+                    app.message = 'Information incomplete. Please try again';
+                }
+            })
+    },
+
+    //        fetchData: function () {
+    //            let url = '/api/games';
+    //            fetch(url, {
+    //                    method: "GET",
+    //                    credentials: "include",
+    //                })
+    //                .then((response) => response.json())
+    //                .then(function (data) {
+    //                    console.log(data)
+    //                    app.gamesJson = data;
+    //                    app.getGames();
+    //                })
+    //        },
+
+
+    getGames: function () {
+        let array = [];
+        let games = this.status.game;
+        let playerTwo = "";
+        let playerOne = "";
+        let playerOneId = "";
+        let playerTwoId = "";
+        let status = "";
+        //            let player2 = "";
+        for (var i = 0; i < games.length; i++) {
+            let date = new Date(games[i].created);
+            let gp = games[i].gamePlayers;
+            console.log(gp);
+            let dates = date.toLocaleString();
+            if ((gp.length == 2 && gp[0].player.id == this.loggedPlayer)) {
+                status = "Play";
+                playerOneId = gp[0].gpId;
+                playerOne = gp[0].player.email + ' vs';
+                playerTwo = gp[1].player.email;
+                playerTwoId = gp[1].gpId;
+
+            } else if (gp.length == 2 && gp[1].player.id == this.loggedPlayer) {
+                status = "Play"
+                playerOneId = gp[1].gpId;
+                playerOne = gp[1].player.email + ' vs';
+                playerTwo = gp[0].player.email;
+                playerTwoId = gp[0].gpId;
+            } else if (gp.length == 1 && gp[0].player.id == this.loggedPlayer) {
+                status = "Play"
+                playerOne = gp[0].player.email;
+                playerTwo = "";
+                playerOneId = gp[0].player.id;
+                playerTwoId = "";
+
+            } else if (gp.length == 1 && gp[0].player.id != this.loggedPlayer) {
+                status = "Join";
+                playerOne = gp[0].player.email;
+                playerTwo = "";
+                playerOneId = gp[0].player.id;
+                playerTwoId = "";
+
+            } else {
+                status = "IN GAME";
+                playerOneId = gp[0].gpId;
+                playerOne = gp[0].player.email + ' vs';
+                playerTwo = gp[1].player.email;
+                playerTwoId = gp[1].gpId;
             }
-            this.games = array;
+            console.log(status);
+            let object = {
+                created: dates,
+                playerOne: playerOne,
+                playerTwo: playerTwo,
+                playerOneId: playerOneId,
+                playerTwoId: playerTwoId,
+                status: status,
 
-        },
-        //
-        //    } //END api/games fetch 
-    }
+            };
+            array.push(object);
+
+        }
+        this.games = array;
+
+    },
+
+    joinGame: function () {
+        fetch("/api/games", {
+                credentials: "include",
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            })
+            .then(function (data) {
+                console.log(data)
+                //
+                //    } //END api/games fetch 
+            })
+    },
 
 
 
@@ -258,11 +298,7 @@ var app = new Vue({
 
 
 
-    //end methods
-
-    //fetch - api/games START
-    //        
-
+} //end methods
 }); //end Vue
 
 

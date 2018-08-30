@@ -26,6 +26,12 @@ public class Game {
 
     }
 
+    public Game(Set<GamePlayer> gamePlayers, Set<Score> scores, Date date) {
+        this.gamePlayers = gamePlayers;
+        this.scores = scores;
+        this.date = date;
+    }
+
     public Set<Score> getScores() {
         return scores;
     }
