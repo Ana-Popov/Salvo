@@ -64,8 +64,10 @@
         
         <h1> Games </h1>
         <ul id="newGame">
-           <li v-for=""></li>
-            <button type="button" class="createGame btn btn-danger" v-on:click="newGame"> New Game</button>
+           <li v-for="game in createGame"></li>
+     
+            <input type="submit" class="createGame btn btn-danger" v-on:click="newGame" value="Create New Game">
+            
         </ul>
         
         <ol id="allGames">
@@ -76,7 +78,7 @@
                 <a :href="'game.html?gp='+game.playerOneId">{{game.status}}</a>
                 </span>
                 <span v-if="game.status == 'Join'"> 
-                <a :href="'game.html?gp='+game.playerOneId"> {{game.status}}</a>
+                <a @click="joinGame(game.gameId)"> {{game.status}}</a>
                 </span>
                 <span v-if="game.status == 'IN GAME'">
                     <p>{{game.status}}</p>

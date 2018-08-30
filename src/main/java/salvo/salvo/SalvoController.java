@@ -49,27 +49,48 @@ public class SalvoController {
     @RequestMapping(method = RequestMethod.POST, value = "/games")
 
     public ResponseEntity<Map<String,Object>> createGame (Authentication authentication){
-        List<Object> list = new ArrayList<>();
+//        List<Object> list = new ArrayList<>();
         Game game = new Game();
-        Player player = playerRepository.findByUserName(authentication.getName());
-        if (player != null){
-            Map<String, Object> newGame = new LinkedHashMap<>();
-            game.setDate(new Date());
-            gameRepository.save(game);
-            GamePlayer gamePlayer = new GamePlayer(player, game);
-            gamePlayerRepository.save(gamePlayer);
-            newGame.put("date", game.getDate());
-            newGame.put("game-id", game.getId());
-            newGame.put("Gp-id", gamePlayer.getId());
-            list.add(newGame);
+        if (authentication != null) {
+            Player player = playerRepository.findByUserName(authentication.getName());
+            if (player != null) {
+                Map<String, Object> newGame = new LinkedHashMap<>();
+                game.setDate(new Date());
+                gameRepository.save(game);
+                GamePlayer gamePlayer = new GamePlayer(player, game);
+                gamePlayerRepository.save(gamePlayer);
+                newGame.put("date", game.getDate());
+                newGame.put("gameId", game.getId());
+                newGame.put("gpId", gamePlayer.getId());
+//            list.add(newGame);
 
-            return new ResponseEntity<>(makeMap("newGame", list), HttpStatus.CREATED);
+                return new ResponseEntity<>(makeMap("newGame", newGame), HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(makeMap("error", "Please log in to create a game"), HttpStatus.UNAUTHORIZED);
+            }
         } else {
             return new ResponseEntity<>(makeMap("error", "Please log in to create a game"), HttpStatus.UNAUTHORIZED);
         }
+    }
 
+    @RequestMapping(method = RequestMethod.POST, path = "/game/{gameId}/players")
 
+    public ResponseEntity<Map<String, Object>> joinGame(Authentication authentication, @PathVariable Long gameId){
+        if (authentication != null) {
+            Player player = playerRepository.findByUserName(authentication.getName());
 
+            Game game = gameRepository.findOne(gameId);
+            if (player != null) {
+                //join the game--------
+                GamePlayer gamePlayer = new GamePlayer(player, game);
+                gamePlayerRepository.save(gamePlayer);
+                return new ResponseEntity<>(makeMap("gpId", gamePlayer.getId()), HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(makeMap("error", ""), HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<>(makeMap("error", "Please log in "), HttpStatus.UNAUTHORIZED);
+        }
     }
 
     public List<Object> displayAllGames() {
@@ -166,24 +187,30 @@ public class SalvoController {
     public ResponseEntity<Map<String, Object>> gameView(@PathVariable Long gamePlayerId,
                                         Authentication authentication) {
         GamePlayer gamePlayer = gamePlayerRepository.findOne(gamePlayerId);
-        Player currentPlayer = playerRepository.findByUserName(authentication.getName()); //is the one authenticated
-        Player player = gamePlayer.getPlayer(); //is the one with the id
+        if (authentication != null) {
 
-        if (currentPlayer.getId() == player.getId()) {
-            Map<String, Object> gameView = new LinkedHashMap<>();
-            gameView.put("user-id", gamePlayer.getId());
-            gameView.put("game", makeGameDTO(gamePlayer.getGame()));
-            gameView.put("ships", gamePlayer.getShips().stream()
-                    .map(ship -> getShips(ship))
-                    .collect(toList()));
-            gameView.put("user-salvoes", makeSalvoDTO(gamePlayer));
-            if (gamePlayer.getGame().getGamePlayers().size() == 2) {
-                gameView.put("opponent-salvoes", makeSalvoDTO(getOpponent(gamePlayer)));
+            Player currentPlayer = playerRepository.findByUserName(authentication.getName()); //is the one authenticated
+            Player player = gamePlayer.getPlayer(); //is the one with the id
+
+            if (currentPlayer.getId() == player.getId()) {
+                Map<String, Object> gameView = new LinkedHashMap<>();
+                gameView.put("user-id", gamePlayer.getId());
+                gameView.put("game", makeGameDTO(gamePlayer.getGame()));
+                gameView.put("ships", gamePlayer.getShips().stream()
+                        .map(ship -> getShips(ship))
+                        .collect(toList()));
+                gameView.put("user-salvoes", makeSalvoDTO(gamePlayer));
+                if (gamePlayer.getGame().getGamePlayers().size() == 2) {
+                    gameView.put("opponent-salvoes", makeSalvoDTO(getOpponent(gamePlayer)));
+                }
+                return new ResponseEntity<>(makeMap("game-view", gameView), HttpStatus.OK);
+            } else {
+
+                return new ResponseEntity<>(makeMap("error", "no access for this info"), HttpStatus.UNAUTHORIZED);
             }
-            return new ResponseEntity<>(makeMap("game-view", gameView),HttpStatus.OK);
         } else {
-
             return new ResponseEntity<>(makeMap("error", "no access for this info"), HttpStatus.UNAUTHORIZED);
+
         }
     }
 
