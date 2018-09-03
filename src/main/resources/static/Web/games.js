@@ -19,8 +19,9 @@ var app = new Vue({
         loggedPlayer: '',
         joinButton: false,
         playButton: false,
-
+        islogin: false,
     },
+
     created() {
         this.getData();
         this.fetchLeaderboard();
@@ -88,6 +89,8 @@ var app = new Vue({
         },
 
         login: function () {
+//            this.userName = document.getElementById("input").value - Javascript. - v-model with vue.js
+            
             fetch("/api/login", {
                     credentials: 'include',
                     method: 'POST',
@@ -102,6 +105,9 @@ var app = new Vue({
                         if (data.player = !null) {
                             app.getData();
                             app.message = "Welcome " + app.userName;
+                            app.islogin = false;
+                            app.getGames();
+
                         }
                     } else if (data.status == 401) {
                         app.message = 'Incorrect username or password';
@@ -115,6 +121,7 @@ var app = new Vue({
                     console.log("error")
                 })
         },
+
 
 
         getPlayerUrl: function () {
@@ -138,9 +145,9 @@ var app = new Vue({
                 })
                 .then(function (data) {
                     app.status = data;
-                    app.message = "Please log in to play a game";
                     app.isLoggedIn = false;
                     app.getData();
+                    app.islogin = false;
                 })
                 .catch(function (fail) {
                     console.log("error")
@@ -164,6 +171,7 @@ var app = new Vue({
                         app.getGames();
                         app.login();
                         app.message = 'Welcome ' + this.userName;
+                        app.islogin = false;
 
                     } else if (data.status == 409) {
                         app.message = "User already exists";

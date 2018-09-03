@@ -1,74 +1,294 @@
-body{
+body {
     width: 100%;
 }
 
-#app{
+a{
+    color: inherit;
+    text-decoration: none;
+}
+
+#banner {
+
+    height: 380px;
+    background-image: url(Pirates/dangerousWater.png);
+    background-attachment: fixed;
+    background-position: top;
+    background-repeat: space;
+    background-size: contain;
+    opacity: 0.9;
+}
+
+.title {
+    font-family: 'Black Ops One', cursive;
+    font-size: 6em;
+    text-align: center;
+    padding-top: 2.8em;
+    /*    color: white;*/
+    text-shadow: -0.5px -0.5px 0 #F8F8FF,
+    0.5px -0.5px 0 #F8F8FF,
+    -0.5px 1px 0 #F8F8FF,
+    0.4px 0.3px 0 #F8F8FF;
+}
+
+#app {
+    background-image: url(Pirates/Redemption_victory2.png);
+    background-repeat: repeat-y;
+
+}
+
+/*leaderboard table*/
+
+.leader {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: scroll;
     width: 100%;
-    height: 100%;
-/*    background-image: url(leadership-e1512581079920-638x400.jpg);*/
-    background-repeat: no-repeat;
-    background-size: cover;
+    border-bottom: 1px solid white;
+
+}
+
+.user {
+    font-family: 'Wallpoet', cursive;
+}
+
+table.leader.table.table-hover {
+    width: 60%;
+    table-layout: auto;
+
+}
+
+table.leader.table.table-hover td th {
+    white-space: nowrap;
+    padding: 20px;
+}
+
+
+
+.index {
+    font-weight: 900;
+    color: #996515;
+}
+
+table th {
+    width: 50%;
+    letter-spacing: 0.7px;
+}
+
+.top {
+    background: url(Pirates/gold_meday_color_-_Google_Search.png);
+
+}
+
+/*login & logout button*/
+
+.btn-primary {
+    background: url(Pirates/gold_meday_color_-_Google_Search.png);
+    color: black;
+    font-family: 'Wallpoet', cursive;
+    font-size: 1.3em;
+    
     
 }
-.alltables{
-    margin: 20px auto;
-    margin-left: 200px;
+
+span.back-btn {
+    background: url(Pirates/gold_meday_color_-_Google_Search.png);
+    color: black;
+    text-decoration: none;
+    font-family: 'Wallpoet', cursive;
+    margin-right: 30px;
+    width: 20%;
+    height: 20%;
+    font-size: 1.3em;
+    padding: 7px;
+}
+
+/*sign up button*/
+
+.btn-secondary {
+    font-family: 'Wallpoet', cursive;
+    color: black;
+}
+
+.allGames.table.table-hover {
+    width: 70%;
+
+}
+
+.allGames.table.table-hover th {
+    width: 50%;
+    table-layout: auto;
+
+}
+
+/*Login pop-up screen */
+
+.login-screen {
+    background-image: url(Pirates/login.png);
+    background-repeat: no-repeat;
+    width: 400px;
+    height: 280px;
+    /*    position: relative;*/
+    position: fixed;
+    top: calc(50% - 25px);
+    left: calc(50% - 50px);
+}
+
+.fa-times-circle {
+    position: relative;
+    top: 30px;
+    left: 50px;
+    font-size: 1.7em;
+    color: black;
+    height: 200px;
+    width: 200px;
+}
+
+div.col-auto.form-inline {
+    padding-top: 70px;
+    padding-left: 90px;
+}
+
+#inputEmail,
+#inputPassword {
+    margin-bottom: 25px;
+}
+
+#inputEmail {
+    margin-left: 15px;
+}
+
+.logon {
+    margin-left: 30px;
+}
+
+button.close-btn {
+    cursor:pointer;
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    top: 31px;
+    right: 40px;
+    transform: translate(0%, -50%);
+    font-size: 20px;
+    font-weight: 400;
+
+}
+.button.close-btn:hover{
+    background: #bbb;
+}
+.btn.btn-primary.logout{
+    position: absolute;
+    top: 105px;
+    left: 150px;
+}
+
+/*end lo in pop up screen*/
+
+/*
+.silver{
+    background: url(Pirates/silver.png);
+}
+.bronze{
+    background: url(Pirates/gold__silver_and_bronze_shiny_labels_or_coins_vector_-_Download_Free_Vector_Art__Stock_Graphics___Images.png)
+}
+*/
+
+.leader .tr {
+    cursor: crosshair;
+    /*    table-layout: fixed;*/
+}
+
+.sTitle {
+    font-family: 'Black Ops One', cursive;
+    font-size: 3em;
+    letter-spacing: 4px;
+    text-shadow: -0.5px -0.5px 0 #F8F8FF,
+    0.5px -0.5px 0 #F8F8FF,
+    -0.5px 1px 0 #F8F8FF,
+    0.4px 0.3px 0 #F8F8FF;
+}
+
+.welcomemsg {
+    height: 30%;
+}
+
+.leader {
+    width: 400px;
+    /*    table-layout: fixed;*/
+}
+
+div.alltables {
+   margin-right:3%;
+    margin-top:8%;
+    margin-left: 3%;
     text-align: center;
 }
 
-table{
+table {
     border-collapse: separate;
     border-color: brown;
-}
-#content{
-    background-image: url(irish%20decor2.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    
 }
 
 .alltables {
     display: inline-flex;
-   
+    width: 82%;
+    
 }
 
-.ships, .salvoes{
+.ships,
+.salvoes {
     flex-direction: column;
     justify-content: space-around;
     width: 60%;
-   
-    
+
+
 }
 
 .salvoes {
     margin-left: 100px;
 }
-.ships{
+
+.ships {
     margin-left: 30px;
 }
-.title, .well { 
+
+.game-title{
+    font-family: 'Black Ops One', cursive;
+    font-size: 3em;
+    letter-spacing: 4px;
+    text-shadow: -0.5px -0.5px 0 #F8F8FF,
+    0.5px -0.5px 0 #F8F8FF,
+    -0.5px 1px 0 #F8F8FF,
+    0.4px 0.3px 0 #F8F8FF;
+}
+
+/*
+.title,
+.well {
     text-align: center;
     margin: 20px;
 }
+*/
 
-.ship-location{
-    background-color:darkblue;
+.ship-location {
+    background-color: darkblue;
 }
+
 .salvo-location {
     border: 1px green solid;
     border-radius: 1px;
-    
+
 }
-.hit{
+
+.hit {
     background-color: red;
-    
+
 }
 
-h2.subtitle{
-    font-size: 
+h2.subtitle {
+    font-size:
 }
 
-.signingUp{
-    
-}
+.signingUp {}

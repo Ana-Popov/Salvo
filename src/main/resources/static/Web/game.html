@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Black+Ops+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nosifer" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Wallpoet" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="game.css">
     <title> Player view </title>
@@ -12,45 +15,61 @@
 
 <body>
     <div id="app">
-        
-            <h1 class="jumbotron title"> Game Information </h1>
-    <div id="content">
-
-        <div class="alltables">
-            <div class="ships">
-               <div class="subtitle">
-                   <h2> {{players.player1}} </h2>
-               </div>
-                <table class="table table-bordered cell-hover">
-                    <tr>
-                        <th></th>
-                        <th class="table-dark" scope="col" v-for="key in cols"> {{key}}</th>
-                    </tr>
-                    <tr v-for="r in rows">
-                        <th class="table-dark" scope="row">{{r}}</th>
-                        <td v-for="c in cols" :id="'U'+r+c"></td>
-                    </tr>
-
-                </table>
+        <header>
+            <div id="banner">
+                <h2 class="title"> BATTLESHIP </h2>
             </div>
-            <div class="salvoes">
-               <div class="subtitle">
-                   <h2> {{players.player2}} </h2>
-                   
-               </div>
-                <table class="table table-bordered">
-                    <tr>
-                        <th></th>
-                        <th class="table-light" v-for="key in cols"> {{key}}</th>
-                    </tr>
-                    <tr v-for="r in rows">
-                        <th class="table-light" scope="row">{{r}}</th>
-                        <td v-for="c in cols" :id="'E'+r+c"></td>
-                    </tr>
-                </table>
+        </header>
+        <!--
+        <div class="welcomemsg">
+            <h1> {{message}}</h1>
+        </div>
+--><span class="back-btn"> <a href="games.html" title="back to the main page">  Back to lobby </a></span>
+        <div id="content">
+            <!--            <h1 class="game-title"> Game Information </h1>-->
+            <div class="alltables">
+                <div class="ships">
+                    <div class="subtitle">
+                        <h2> {{players.player1}} </h2>
+                    </div>
+                    <table class="table table-bordered cell-hover">
+                        <tr>
+                            <th></th>
+                            <th class="table-dark" scope="col" v-for="key in cols"> {{key}}</th>
+                        </tr>
+                        <tr v-for="r in rows">
+                            <th class="table-dark" scope="row">{{r}}</th>
+                            <td v-for="c in cols" :id="'U'+r+c">{{r+c}}</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="ship-info">
+                        <table class="ships">
+                            <tr>
+                                <th> </th>
+                            </tr>
+
+                        </table>
+                    </div>
+                <div class="salvoes">
+                    <div class="subtitle">
+                        <h2> {{players.player2}} </h2>
+
+                    </div>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th></th>
+                            <th class="table-light" v-for="key in cols"> {{key}}</th>
+                        </tr>
+                        <tr v-for="r in rows">
+                            <th class="table-light" scope="row">{{r}}</th>
+                            <td v-for="c in cols" :id="'E'+r+c">{{r+c}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
-     </div>
     </div>
 
 
