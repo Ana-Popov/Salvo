@@ -27,7 +27,7 @@
 --><span class="back-btn"> <a href="games.html" title="back to the main page">  Back to lobby </a></span>
         <div id="content">
             <!--            <h1 class="game-title"> Game Information </h1>-->
-            <div class="alltables">
+            <div class="alltables" s>
                 <div class="ships">
                     <div class="subtitle">
                         <h2> {{players.player1}} </h2>
@@ -45,13 +45,14 @@
                     </table>
                 </div>
                 <div class="ship-info">
-                        <table class="ships">
-                            <tr>
-                                <th> </th>
-                            </tr>
-
-                        </table>
-                    </div>
+                   <div class="ships-avail"> SHIPS </div>
+                    <div class="shipTypeLabel">Carrier <span class="shipPoslabel" id="carrierPosition"></span></div>
+                    <div class="shipTypeLabel">Battleship <span class="shipPoslabel" id="battleshipPosition"></span></div>
+                    <div class="shipTypeLabel">Submarine <span class="shipPoslabel" id="submarinePosition"></span></div>
+                    <div class="shipTypeLabel">Destroyer <span class="shipPoslabel" id="destroyerPosition"></span></div>
+                    <div class="shipTypeLabel">Patrol boat <span class="shipPoslabel" id="patrolboatPosition"></span></div>
+                    <div class="movingMsgBig"></div>
+                </div>
                 <div class="salvoes">
                     <div class="subtitle">
                         <h2> {{players.player2}} </h2>

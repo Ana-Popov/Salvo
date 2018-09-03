@@ -209,16 +209,16 @@ public class SalvoController {
 
             if (currentPlayer.getId() == player.getId()) {
                 Map<String, Object> gameView = new LinkedHashMap<>();
-                gameView.put("user-id", gamePlayer.getId());
                 gameView.put("game", makeGameDTO(gamePlayer.getGame()));
+                gameView.put("userId", gamePlayer.getId());
                 gameView.put("ships", gamePlayer.getShips().stream()
                         .map(ship -> getShips(ship))
                         .collect(toList()));
-                gameView.put("user-salvoes", makeSalvoDTO(gamePlayer));
+                gameView.put("userSalvoes", makeSalvoDTO(gamePlayer));
                 if (gamePlayer.getGame().getGamePlayers().size() == 2) {
-                    gameView.put("opponent-salvoes", makeSalvoDTO(getOpponent(gamePlayer)));
+                    gameView.put("opponentSalvoes", makeSalvoDTO(getOpponent(gamePlayer)));
                 }
-                return new ResponseEntity<>(makeMap("game-view", gameView), HttpStatus.OK);
+                return new ResponseEntity<>(makeMap("gameView", gameView), HttpStatus.OK);
             } else {
 
                 return new ResponseEntity<>(makeMap("error", "no access for this info"), HttpStatus.UNAUTHORIZED);

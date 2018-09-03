@@ -219,11 +219,19 @@ button.close-btn {
     /*    table-layout: fixed;*/
 }
 
+/*grids area - tables */
+/*
 div.alltables {
    margin-right:3%;
     margin-top:8%;
     margin-left: 3%;
     text-align: center;
+    align-content: space-between;
+    
+}
+*/
+div.ship-info{
+    align-self: center;
 }
 
 table {
@@ -231,29 +239,49 @@ table {
     border-color: brown;
 }
 
+/*
 .alltables {
     display: inline-flex;
-    width: 82%;
-    
+    flex-direction: row;
+    width: 80%;
+    justify-content: center;
+    margin-left: 20px;
+    margin-right:20px;
+    text-align: center;
+    align-content: space-between;
 }
-
+*/
+div.alltables{
+    margin-top: 90px;
+    margin-left: 30px;
+    margin-right: 20px;
+    flex-wrap: nowrap;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+/*    margin:-10px;*/
+}
 .ships,
 .salvoes {
+    width: 30%;
+    
+}
+.salvoes{
+    margin-right: 120px;
+}
+
+.ship-info{
+    margin-left:150px;
+    width: 100px;
+    height: 580px;
+    border: 1px solid gold;
+    display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    width: 60%;
-
-
+    justify-content: space-between;
+    text-align: center;
 }
 
-.salvoes {
-    margin-left: 100px;
-}
-
-.ships {
-    margin-left: 30px;
-}
-
+/*grids area END */
 .game-title{
     font-family: 'Black Ops One', cursive;
     font-size: 3em;
