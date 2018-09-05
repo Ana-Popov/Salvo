@@ -20,7 +20,10 @@ var app = new Vue({
         joinButton: false,
         playButton: false,
         islogin: false,
-        newData:'',
+        newData: '',
+        opponentTable: true, // show
+        joinedGameData:[],
+        //        scrollPosition: window.pageYOffset,
     },
 
     created() {
@@ -64,9 +67,10 @@ var app = new Vue({
                 .then(function (data) {
                     console.log(data);
                     app.newData = data.newGame;
+                    app.opponentTable = false;
                     //                    app.createGame = newData;
-                    console.log(newData)
-                    app.newGamePlayerId = newData.gpId;
+                    console.log(app.newData)
+                    app.newGamePlayerId = app.newData.gpId;
                     console.log(app.newGamePlayerId);
                     location.replace("/web/game.html?gp=" + app.newGamePlayerId)
 
@@ -75,6 +79,22 @@ var app = new Vue({
             //    } //END api/games fetch 
 
         },
+
+        //        create div: function () {
+        //            let divI = document.createElement('div');
+        //            divI.className = "emptyDiv";
+        //            document.getElementsByTagName('body')[0].appendChild(divI);
+        //
+        //            DivI.innerHTML = "I'm the first div";
+        //
+        //            // Now create and append to iDiv
+        //            let innerDiv = document.createElement('div');
+        //            innerDiv.className = 'block-2';
+        //
+        //            // The variable iDiv is still good... Just append to it.
+        //            DivI.appendChild(innerDiv);
+        //            innerDiv.innerHTML = "I'm the inner div";
+        //        },
 
         fetchLeaderboard: function () {
             let url = "/api/leaderboard";
@@ -149,6 +169,7 @@ var app = new Vue({
                     app.isLoggedIn = false;
                     app.getData();
                     app.islogin = false;
+                    app.message = "See you later, Captain!";
                 })
                 .catch(function (fail) {
                     console.log("error")
@@ -200,6 +221,7 @@ var app = new Vue({
 
         closePopUpLogIn: function () {
             this.islogin = false;
+            app.scrollToTop();
         },
 
 
@@ -279,7 +301,7 @@ var app = new Vue({
             history.pushState(stateObject, title, newUrl);
         },
 
-        joinGame: function () {
+        joinGame: function (id) {
             fetch("/api/game/" + id + "/players", {
                     credentials: "include",
                     method: 'POST',
@@ -293,31 +315,43 @@ var app = new Vue({
                         .then(function (data) {
                             console.log(data)
                             location.replace("/web/game.html?gp=" + data.gpId)
+                            app.joinedGameData = data.game;
+                        console.log(app.joinedGameData);
+                            if (data.game.gamePlayers.length > 1) {
+                                app.opponentTable = true;
+                            }
+                            else{
+                                app.opponentTable = false;
+                            }
                         })
                     //
                     //    } //END api/games fetch 
                 })
         },
-//        postShips: function () {
-//            fetch("/api/games/players/" + id + "/ships", {
-//                    credentials: "include",
-//                    method: 'POST',
-//                    headers: {
-//                        'Accept': 'application/json',
-//                        'Content-Type': 'application/json'
-//                    },
-//                    body: JSON.stringify([{
-//                        type: "destroyer",
-//                        locations: ["A1", "A2", "A3", "A4", "A5"]
-//        }]),
-//                })
-//                .then(r => r.json())
-//                .then(r => console.log(r))
-//                .catch(function (fail) {
-//                    console.log("error", fail)
-//                })
-//        }
-//
+
+        scrollToTop: function () {
+            window.scrollTo(0, 0);
+        },
+        //        postShips: function () {
+        //            fetch("/api/games/players/" + id + "/ships", {
+        //                    credentials: "include",
+        //                    method: 'POST',
+        //                    headers: {
+        //                        'Accept': 'application/json',
+        //                        'Content-Type': 'application/json'
+        //                    },
+        //                    body: JSON.stringify([{
+        //                        type: "destroyer",
+        //                        locations: ["A1", "A2", "A3", "A4", "A5"]
+        //        }]),
+        //                })
+        //                .then(r => r.json())
+        //                .then(r => console.log(r))
+        //                .catch(function (fail) {
+        //                    console.log("error", fail)
+        //                })
+        //        }
+        //
 
 
 

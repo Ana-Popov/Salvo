@@ -29,8 +29,9 @@
             <!--            <h1 class="game-title"> Game Information </h1>-->
             <div class="alltables row justify-content-md-center">
                 <div class="ships col-sm-10 col-md-8 col-lg-5">
-                    <div class="subtitle">
-                        <h2> {{players.player1}} </h2>
+                    <div class="players"> 
+                       <img src="Pirates/sailor.png" class="sailor">
+                        <h2 class="player-playing"> {{players.player1}} </h2>
                     </div>
                     <table class="table table-bordered cell-hover">
                         <tr>
@@ -58,23 +59,23 @@
                     <div class="shipTypeLabel">Destroyer <span class="shipPoslabel" id="destroyerPosition"></span></div>
                     <div class="shipTypeLabel">Patrol boat <span class="shipPoslabel" id="patrolboatPosition"></span></div>
                 </div>
-                    <div class="salvoes col-sm-10 col-md-8 col-lg-5">
-                        <div class="subtitle">
-                            <h2> {{players.player2}} </h2>
-
-                        </div>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th></th>
-                                <th class="table-light" v-for="key in cols"> {{key}}</th>
-                            </tr>
-                            <tr v-for="r in rows">
-                                <th class="table-light" scope="row">{{r}}</th>
-                                <td v-for="c in cols" class="enemyCells" :id="'E'+r+c">{{r+c}}</td>
-                            </tr>
-                        </table>
+                <div class="salvoes col-sm-10 col-md-8 col-lg-5" v-if="opponentTable">
+                    <div class="subtitle">
+                       <img src="Pirates/sailor2.png" class="sailor2">
+                        <h2 class="player-playing"> {{players.player2}} </h2>
                     </div>
-                
+                    <table class="table table-bordered">
+                        <tr>
+                            <th></th>
+                            <th class="table-light" v-for="key in cols"> {{key}}</th>
+                        </tr>
+                        <tr v-for="r in rows">
+                            <th class="table-light" scope="row">{{r}}</th>
+                            <td v-for="c in cols" class="enemyCells" :id="'E'+r+c">{{r+c}}</td>
+                        </tr>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
@@ -83,8 +84,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-scrollto"></script>
     <!--    <script type="text/javascript" src="gameJS.js"> </script>-->
     <script type="text/javascript" src="playerview.js"></script>
+
 </body>
 
 </html>

@@ -74,7 +74,14 @@ table.leader.table.table-hover td th {
 table th {
     width: 50%;
     letter-spacing: 0.7px;
+    text-align:justify;
 }
+/*games table*/
+/*
+th.date, th.players, th.status{
+    text-align:left;
+}
+*/
 
 .top {
     background: url(Pirates/gold_meday_color_-_Google_Search.png);
@@ -111,6 +118,9 @@ input.createGame.btn {
     background: url(Pirates/gold_meday_color_-_Google_Search.png);
     font-family: 'Wallpoet', cursive;
     margin: 20px;
+}
+input.createGame.btn:hover{
+    color: #fff;
 }
 
 /*sign up button*/
@@ -310,6 +320,39 @@ div.alltables {
 }
 
 
+
+
+.signingUp {}
+
+/*GAME HTML START*/
+
+h2.player-playing{
+    font-family: 'Black Ops One', cursive;
+    font-size: 1.7em;
+    text-align: center;
+/*
+    letter-spacing: 4px;
+    text-shadow: -0.5px -0.5px 0 #F8F8FF,
+    0.5px -0.5px 0 #F8F8FF,
+    -0.5px 1px 0 #F8F8FF,
+    0.4px 0.3px 0 #F8F8FF;
+*/
+}
+
+.sailor{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: 50px;
+    top: -30px;
+}
+.sailor2{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    right: 30px;
+    top:-30px;
+}
 .ship-location {
     background-color: darkblue;
 }
@@ -324,12 +367,6 @@ div.alltables {
     background-color: red;
 
 }
-
-h2.subtitle {
-    font-size:
-}
-
-.signingUp {}
 
 /*ships stylying*/
 
@@ -365,15 +402,7 @@ h2.subtitle {
 */
 }
 /*
-[draggable] {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-   Required to make elements draggable in old WebKit 
-  -khtml-user-drag: element;
-  -webkit-user-drag: element;
-}
+
 */
 
 /*END ships */

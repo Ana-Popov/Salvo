@@ -67,7 +67,7 @@
             </table>
 
         </div>
-        <input type="submit" class="createGame btn" v-if="!isLoggedin" v-on:click="newGame" value="Create New Game">
+        <input type="submit" class="createGame btn" v-if="isLoggedIn" @click="newGame" value="Create New Game">
         <!--all games table-->
         <div class="games-table">
             <h1 class="sTitle"> Games </h1>

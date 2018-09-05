@@ -8,6 +8,7 @@ var app = new Vue({
         cols: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
         players: {},
         hits: [],
+        opponentTable: false,
     },
 
     created() {
@@ -33,7 +34,9 @@ var app = new Vue({
                     app.getUsername();
                     app.displaySalvoes(app.gameView['userSalvoes'], 'E')
                     if (app.gameObject.length == 2) {
-                        app.displaySalvoes(app.gameView['opponentSalvoes'], 'U')
+                       app.opponentTable = true; app.displaySalvoes(app.gameView['opponentSalvoes'], 'U')
+                    } else{
+                        app.opponentTable = false;
                     }
 
                 })
@@ -105,7 +108,6 @@ function startDrag(ev) {
     let placedShip = document.getElementsByClassName(".shipTypeLabel")
     console.log(placedShip);
     console.log(existingShips);
-
 
 }
 
