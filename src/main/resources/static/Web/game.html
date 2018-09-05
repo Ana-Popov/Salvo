@@ -25,10 +25,10 @@
             <h1> {{message}}</h1>
         </div>
 --><span class="back-btn"> <a href="games.html" title="back to the main page">  Back to lobby </a></span>
-        <div id="content">
+        <div id="content container">
             <!--            <h1 class="game-title"> Game Information </h1>-->
-            <div class="alltables" s>
-                <div class="ships">
+            <div class="alltables row justify-content-md-center">
+                <div class="ships col-sm-10 col-md-8 col-lg-5">
                     <div class="subtitle">
                         <h2> {{players.player1}} </h2>
                     </div>
@@ -39,36 +39,42 @@
                         </tr>
                         <tr v-for="r in rows">
                             <th class="table-dark" scope="row">{{r}}</th>
-                            <td v-for="c in cols" :id="'U'+r+c">{{r+c}}</td>
+                            <td v-for="c in cols" class="userCells" ondragover="allowDrop(event)" ondrop="drop(event)" :id="'U'+r+c">{{r+c}}</td>
                         </tr>
 
                     </table>
                 </div>
-                <div class="ship-info">
-                   <div class="ships-avail"> SHIPS </div>
-                    <div class="shipTypeLabel">Carrier <span class="shipPoslabel" id="carrierPosition"></span></div>
-                    <div class="shipTypeLabel">Battleship <span class="shipPoslabel" id="battleshipPosition"></span></div>
+                <div class="ship-info col-sm-2 col-md-3 col-lg-2">
+
+                    <div class="ships-avail"> SHIPS </div>
+
+                    <div class="shipTypeLabel" ondragover="allowDrop(event)" ondrop="drop(event)"> Carrier <img id="carrierPosition" draggable="true" src="AircraftCarrier1.png" ondragstart="startDrag(event)">
+                    </div>
+
+                    <div class="shipTypeLabel" ondragover="allowDrop(event)" ondrop="drop(event)"> Battleship <img src="Pirates/battleship.ship.png" id="battleshipPosition" draggable="true" ondragstart="startDrag(event)">
+                    </div>
+
                     <div class="shipTypeLabel">Submarine <span class="shipPoslabel" id="submarinePosition"></span></div>
                     <div class="shipTypeLabel">Destroyer <span class="shipPoslabel" id="destroyerPosition"></span></div>
                     <div class="shipTypeLabel">Patrol boat <span class="shipPoslabel" id="patrolboatPosition"></span></div>
-                    <div class="movingMsgBig"></div>
                 </div>
-                <div class="salvoes">
-                    <div class="subtitle">
-                        <h2> {{players.player2}} </h2>
+                    <div class="salvoes col-sm-10 col-md-8 col-lg-5">
+                        <div class="subtitle">
+                            <h2> {{players.player2}} </h2>
 
+                        </div>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th></th>
+                                <th class="table-light" v-for="key in cols"> {{key}}</th>
+                            </tr>
+                            <tr v-for="r in rows">
+                                <th class="table-light" scope="row">{{r}}</th>
+                                <td v-for="c in cols" class="enemyCells" :id="'E'+r+c">{{r+c}}</td>
+                            </tr>
+                        </table>
                     </div>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th></th>
-                            <th class="table-light" v-for="key in cols"> {{key}}</th>
-                        </tr>
-                        <tr v-for="r in rows">
-                            <th class="table-light" scope="row">{{r}}</th>
-                            <td v-for="c in cols" :id="'E'+r+c">{{r+c}}</td>
-                        </tr>
-                    </table>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -77,6 +83,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--    <script type="text/javascript" src="gameJS.js"> </script>-->
     <script type="text/javascript" src="playerview.js"></script>
 </body>
 

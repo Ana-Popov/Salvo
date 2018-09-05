@@ -25,17 +25,17 @@ var app = new Vue({
                 .then((response) => response.json())
                 .then(function (data) {
 
-                    app.gameView = data;
-                    console.log(data);
-                    return data;
+                    app.gameView = data.gameView;
+                    console.log(app.gameView);
 
-                    app.gameObject = data.gameView.game.GamePlayers;
-                    console.log(gameObject);
-                    app.gameObject = app.gameView;
+                    app.gameObject = app.gameView.game.gamePlayers;
                     app.displayShips();
                     app.getUsername();
-                    //                app.displaySalvoes(data['user-salvoes'],'E')
-                    //                app.displaySalvoes(data['opponent-salvoes'],'U')
+                    app.displaySalvoes(app.gameView['userSalvoes'], 'E')
+                    if (app.gameObject.length == 2) {
+                        app.displaySalvoes(app.gameView['opponentSalvoes'], 'U')
+                    }
+
                 })
         },
 
@@ -72,10 +72,10 @@ var app = new Vue({
         },
 
         getUsername: function () {
-            let gamePlayers = this.data.gameView.game.gamePlayers;
+            let gamePlayers = this.gameView.game.gamePlayers;
             let player1 = gamePlayers["0"].player.email;
             let player2;
-            if (gamePlayers[1].player.email) {
+            if (gamePlayers[1]) {
                 player2 = gamePlayers[1].player.email;
             } else {
                 player1 = gamePlayers["0"].player.email;
@@ -88,7 +88,55 @@ var app = new Vue({
         }
     }
 
-});
+})
+//drag and drop 
+let ships = document.querySelectorAll('.shipTypeLabel');
+let cells = document.querySelectorAll('.userCells');
+let existingShips = document.querySelectorAll('.ship-location');
+var id;
+
+function allowDrop(ev) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+}
+
+function startDrag(ev) {
+    id = ev.target.id;
+    let placedShip = document.getElementsByClassName(".shipTypeLabel")
+    console.log(placedShip);
+    console.log(existingShips);
+
+
+}
+
+function drop(ev) {
+
+    let locShip = ev.target.id;
+    console.log(ships)
+    ev.target.append(document.getElementById(id));
+
+}
+//location of the ships ;
+
+
+
+
+
+
+//    for (var i = 0; 1 < cells.length; i++) {
+//    ships[i].addEventListener('dragstart', dragStart);
+//    ships[i].addEventListener('dragend', dragEnd);
+//}
+//
+//
+//function dragStart() {
+//    console.log('starts');
+//}
+//
+//function dragEnd() {
+//    console.log('end');
+//}
+
 
 
 

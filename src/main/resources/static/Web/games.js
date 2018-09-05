@@ -20,6 +20,7 @@ var app = new Vue({
         joinButton: false,
         playButton: false,
         islogin: false,
+        newData:'',
     },
 
     created() {
@@ -62,7 +63,7 @@ var app = new Vue({
                 .then((response) => response.json())
                 .then(function (data) {
                     console.log(data);
-                    var newData = data.newGame;
+                    app.newData = data.newGame;
                     //                    app.createGame = newData;
                     console.log(newData)
                     app.newGamePlayerId = newData.gpId;
@@ -89,8 +90,8 @@ var app = new Vue({
         },
 
         login: function () {
-//            this.userName = document.getElementById("input").value - Javascript. - v-model with vue.js
-            
+            //            this.userName = document.getElementById("input").value - Javascript. - v-model with vue.js
+
             fetch("/api/login", {
                     credentials: 'include',
                     method: 'POST',
@@ -197,6 +198,10 @@ var app = new Vue({
         //                })
         //        },
 
+        closePopUpLogIn: function () {
+            this.islogin = false;
+        },
+
 
         getGames: function () {
             let array = [];
@@ -274,7 +279,7 @@ var app = new Vue({
             history.pushState(stateObject, title, newUrl);
         },
 
-        joinGame: function (id) {
+        joinGame: function () {
             fetch("/api/game/" + id + "/players", {
                     credentials: "include",
                     method: 'POST',
@@ -293,47 +298,33 @@ var app = new Vue({
                     //    } //END api/games fetch 
                 })
         },
+//        postShips: function () {
+//            fetch("/api/games/players/" + id + "/ships", {
+//                    credentials: "include",
+//                    method: 'POST',
+//                    headers: {
+//                        'Accept': 'application/json',
+//                        'Content-Type': 'application/json'
+//                    },
+//                    body: JSON.stringify([{
+//                        type: "destroyer",
+//                        locations: ["A1", "A2", "A3", "A4", "A5"]
+//        }]),
+//                })
+//                .then(r => r.json())
+//                .then(r => console.log(r))
+//                .catch(function (fail) {
+//                    console.log("error", fail)
+//                })
+//        }
+//
 
 
 
-        //        login: function (evt) {
-        //            evt.preventDefault();
-        //            var form = evt.target.form;
-        //            $.post("/api/login", {
-        //                    username: form["username"].value,
-        //                    password: form["password"].value
-        //                })
-        //                .done(function (d) {
-        //                    console.log(d)
-        //                })
-        //                .fail(function (d) {
-        //                    console.log(d)
-        //                });
-        //        },
-        //        logout: function (evt) {
-        //            evt.preventDefault();
-        //            $.post("/api/logout")
-        //                .done(function (d) {
-        //                    console.log(d)
-        //                })
-        //                .fail(function (d) {
-        //                    console.log(d)
-        //                });
-
-        //            for(var i = 0; i< players.length; i++){
-        //                let wins = players[i].win;
-        //                let tie = players[i].tie;
-        //                wins.sort(function(a, b){
-        //                    return a-b});
-        //                } this.win = wins;
-        //            }
-
-
+        //        
 
     } //end methods
 }); //end Vue
-
-
 
 ////VANILLA JAVASCRIPT
 //document.addEventListener("DOMContentLoaded", function () {
