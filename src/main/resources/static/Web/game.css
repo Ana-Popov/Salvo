@@ -5,6 +5,7 @@ body {
 a {
     color: inherit;
     text-decoration: none;
+    cursor: pointer;
 }
 
 #banner {
@@ -28,6 +29,7 @@ a {
     0.5px -0.5px 0 #F8F8FF,
     -0.5px 1px 0 #F8F8FF,
     0.4px 0.3px 0 #F8F8FF;
+    
 }
 
 #app {
@@ -61,7 +63,7 @@ table.leader.table.table-hover {
 
 table.leader.table.table-hover td th {
     white-space: nowrap;
-    padding: 20px;
+    padding: 10px;
 }
 
 
@@ -72,7 +74,6 @@ table.leader.table.table-hover td th {
 }
 
 table th {
-    width: 50%;
     letter-spacing: 0.7px;
     text-align:justify;
 }
@@ -82,6 +83,16 @@ th.date, th.players, th.status{
     text-align:left;
 }
 */
+td {
+/*    */
+    position: relative;
+    display:table-cell;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+     
+    
+}
 
 .top {
     background: url(Pirates/gold_meday_color_-_Google_Search.png);
@@ -96,8 +107,6 @@ th.date, th.players, th.status{
     font-family: 'Wallpoet', cursive;
     font-size: 1.3em;
     margin: 20px;
-
-
 }
 
 span.back-btn {
@@ -175,12 +184,15 @@ div.col-auto.form-inline {
     margin-bottom: 25px;
 }
 
+
 #inputEmail {
     margin-left: 15px;
 }
 
 .logon {
     margin-left: 30px;
+      cursor: pointer;
+  
 }
 
 button.close-btn {
@@ -232,15 +244,28 @@ button.close-btn {
     -0.5px 1px 0 #F8F8FF,
     0.4px 0.3px 0 #F8F8FF;
     text-align: center;
+    margin-bottom: 30px;
 }
 
-.welcomemsg {    
-    height: 30%;
+div.welcomemsg {    
+    height: 20%;
+    font-size: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
 }
 
 .leader {
     width: 400px;
     /*    table-layout: fixed;*/
+}
+/*button to join - makes entire area clickable*/
+th.loginToJoin{
+    display: block;
+    cursor: pointer;
+}
+.main-login{
+    margin-left: 20px;
+    margin-bottom: 10px;
 }
 
 /*grids area - tables */
@@ -256,9 +281,16 @@ div.alltables {
 }
 */
 
-div.ship-info {
-    align-self: center;
-    position: relative;
+/*div*/
+.ship-info {
+    width: 100px;
+    height: 590px;
+/*    border: 1px solid gold;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: -20px;
 }
 
 table {
@@ -296,16 +328,6 @@ div.alltables {
 
 }
 
-.ship-info {
- 
-    width: 100px;
-    height: 500px;
-    border: 1px solid gold;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-}
 
 /*grids area END */
 
@@ -318,9 +340,6 @@ div.alltables {
     -0.5px 1px 0 #F8F8FF,
     0.4px 0.3px 0 #F8F8FF;
 }
-
-
-
 
 .signingUp {}
 
@@ -344,7 +363,7 @@ h2.player-playing{
     height: 60px;
     position: absolute;
     left: 50px;
-    top: -30px;
+    top: -60px;
 }
 .sailor2{
     width: 60px;
@@ -370,26 +389,78 @@ h2.player-playing{
 
 /*ships stylying*/
 
-#carrierPosition, {
-/*    background-image: url(Pirates/AircraftCarrier%20copy.png);*/
-    width: 200px;
-    margin: 0 auto;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    padding: 0;
-    height: 30px;
-    
+div.the-ship.horiz{
+/*     margin-top: -30px;*/
+    padding-bottom:50px;
 }
 
-#battleshipPosition{
-    width: 140px;
-    height: 20px;
+div.the-ship.horiz.battleship{
+    margin-top: -30px;
 }
-/*classes for the ships */
-.hold{
+div.the-ship.horiz.cruiser{
+    margin-top:-40px;
+}
+
+#carrier {
+    width: 250px;
+    height: 50px;
+    position: absolute;
+/*    top:0;*/
+    left:0;
+    z-index: 9;
+}
+
+#battleship{
+    width: 200px;
+    height: 50px;
+    position: absolute;
+/*    top:0;*/
+    left:0;
+    z-index: 9;
+}
+
+#cruiser{
+    width: 150px;
+    height: 50px;
+    position: absolute;
+/*    top:0;*/
+    left:0;
+    z-index: 9;
+}
+
+#destroyer{
+    width: 100px;
+    height: 50px;
+    position: absolute;
+/*    top:0;*/
+    left:0;
+    z-index: 9;
+}
+#submarine{
+    width: 150px;
+    height: 50px;
+    position: absolute;
+/*    top:0;*/
+    left:0;
+    z-index: 9;
+}
+    
+
+.hold {
     border: solid #ccc 4px;
 }
 
+/*horiz is the defauls class for the ships in a horizontal position*/
+.horiz{
+    
+}
+
+.vertical{
+    transform-origin: left;
+    transform: rotate(90deg);
+    transition: 0.9s transform; 
+    
+}
 
 .invisible{
     display: none;

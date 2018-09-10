@@ -25,7 +25,7 @@
         </div>
         <div class="login-area">
             <button type="submit" class="btn btn-primary" v-if="isLoggedIn" v-on:click="logout">Logout</button>
-            <div class="form-inline" v-if="!isLoggedIn">{{message}}
+            <div class="main-login form-inline" v-if="!isLoggedIn">
                 <!--            @submit.prevent="login" -->
                 <div class="form-group">
                     <label class="sr-only" for="inputEmail">Email</label>
@@ -35,7 +35,7 @@
                     <label class="sr-only" for="inputPassword">Password</label>
                     <input type="password" class="form-control" placeholder="Password" v-model="password">
                 </div>
-                <button type="submit" class="btn btn-primary" v-on:click="login" @keyup.enter = "login">Login</button>
+                <button type="submit" class="btn btn-primary" v-on:click="login('normal')" @keyup.enter = "login('normal')">Login</button>
                 <div class="signingUp">
                     <!--                    <label class="SignUp"> Not registered yet, no problem </label>-->
                     <button type="signup" class="btn btn-secondary" v-on:click="signUp"> Signup</button>
@@ -88,7 +88,7 @@
                 <span v-if="game.status == 'Join' && isLoggedIn"> 
                 <a @click="joinGame(game.gameId)"> {{game.status}}</a>
                 </span>
-                <span v-else-if="game.status == 'Join' && !isLoggedIn"><a @click="islogin = true"> Login to join </a></span>
+                <span class="loginToJoin" v-else-if="game.status == 'Join' && !isLoggedIn"><a @click="openPopUpLogIn(game.gameId)"> Login to join </a></span>
                 <span v-if="game.status == 'IN GAME'">
                     {{game.status}}
                 </span>
@@ -101,8 +101,8 @@
          v-if="islogin">
         <button type="submit" class="btn btn-primary logout" v-if="isLoggedIn" v-on:click="logout">Logout</button>
             <button type="reset" class="close-btn" @click="closePopUpLogIn"> X </button>
-            <div class="col-auto form-inline" v-if="!isLoggedIn">{{message}}
-                <!--            @submit.prevent="login" -->
+            <div class="col-auto form-inline" v-if="!isLoggedIn"
+            @submit.prevent="login"> 
                 <div class="pop form-group">
                     <label class="sr-only" for="inputEmailPop">Email</label>
                     <input type="email" class="form-control" id="inputEmail" placeholder="Email" v-model="userName">
@@ -111,8 +111,9 @@
                     <label class="sr-only" for="inputPasswordPop">Password</label>
                     <input type="password" class="form-control" id="inputPassword" placeholder="Password" v-model="password">
                 </div>
-                <button type="submit" class="btn btn-primary logon" v-on:click="login"> Login</button>
+                <button type="submit" class="btn btn-primary logon" v-on:click="loginFromPopUp"> Login </button>
                 <div class="col-auto signingUp">
+                  
                     <!--                    <label class="SignUp"> Not registered yet, no problem </label>-->
                     <button type="signup" class="btn btn-secondary pop" v-on:click="signUp"> Signup</button>
                 </div>

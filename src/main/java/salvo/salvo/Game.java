@@ -69,4 +69,8 @@ public class Game {
     public void setGamePlayers(Set<GamePlayer> gamePlayers) {
         this.gamePlayers = gamePlayers;
     }
+
+    public GamePlayer getGamePlayer() {
+        return gamePlayers.stream().findFirst().orElse(null);
+    }
 }

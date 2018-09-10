@@ -82,9 +82,13 @@ public class SalvoController {
             Game game = gameRepository.findOne(gameId);
             if (player != null) {
                 //join the game--------
-                GamePlayer gamePlayer = new GamePlayer(player, game);
-                gamePlayerRepository.save(gamePlayer);
-                return new ResponseEntity<>(makeMap("gpId", gamePlayer.getId()), HttpStatus.CREATED);
+                if (player.getId() != game.getGamePlayer().getPlayer().getId()) {
+                    GamePlayer gamePlayer = new GamePlayer(player, game);
+                    gamePlayerRepository.save(gamePlayer);
+                    return new ResponseEntity<>(makeMap("gpId", gamePlayer.getId()), HttpStatus.CREATED);
+                } else {
+                    return new ResponseEntity<>(makeMap("error", "You can not play again your self idiot"), HttpStatus.UNAUTHORIZED);
+                }
             } else {
                 return new ResponseEntity<>(makeMap("error", "Unauthorised request"), HttpStatus.UNAUTHORIZED);
             }

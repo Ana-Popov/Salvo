@@ -21,8 +21,8 @@ var app = new Vue({
         playButton: false,
         islogin: false,
         newData: '',
+        gameIdToJoin: "",
         opponentTable: true, // show
-        joinedGameData:[],
         //        scrollPosition: window.pageYOffset,
     },
 
@@ -109,7 +109,7 @@ var app = new Vue({
                 })
         },
 
-        login: function () {
+        login: function (wayToLogIn) {
             //            this.userName = document.getElementById("input").value - Javascript. - v-model with vue.js
 
             fetch("/api/login", {
@@ -123,12 +123,15 @@ var app = new Vue({
                 })
                 .then(function (data) {
                     if (data.status == 200) {
-                        if (data.player = !null) {
-                            app.getData();
-                            app.message = "Welcome " + app.userName;
-                            app.islogin = false;
-                            app.getGames();
-
+                        if (wayToLogIn != "popup") {
+                            if (data.player = !null) {
+                                app.getData();
+                                app.message = "Welcome " + app.userName;
+                                app.islogin = false;
+                                app.getGames();
+                            }
+                        } else {
+                            app.joinGame(app.gameIdToJoin)
                         }
                     } else if (data.status == 401) {
                         app.message = 'Incorrect username or password';
@@ -221,7 +224,25 @@ var app = new Vue({
 
         closePopUpLogIn: function () {
             this.islogin = false;
-            app.scrollToTop();
+            //            app.scrollToTop();
+        },
+        openPopUpLogIn: function (id) {
+            this.islogin = true;
+            app.gameIdToJoin = id;
+        },
+
+        loginFromPopUp: function () {
+
+            let thisGame = app.games;
+            console.log(app.games)
+            //                if (app.userName !== thisGame.playerOne && app.username !== thisGame.playerTwo) {
+            app.login("popup");
+
+            //                } else {
+            //                    alert("You cannot play against yourself. Please exit the login screen and join another game");
+            //                }
+
+
         },
 
 
@@ -314,15 +335,14 @@ var app = new Vue({
                     data.json()
                         .then(function (data) {
                             console.log(data)
-                            location.replace("/web/game.html?gp=" + data.gpId)
-                            app.joinedGameData = data.game;
-                        console.log(app.joinedGameData);
-                            if (data.game.gamePlayers.length > 1) {
-                                app.opponentTable = true;
-                            }
-                            else{
-                                app.opponentTable = false;
-                            }
+                            //                            location.replace("/web/game.html?gp=" + data.gpId)
+                            //                            app.joinedGameData = data.game;
+                            //                            console.log(app.joinedGameData);
+                            //                            if (data.game.gamePlayers.length > 1) {
+                            //                                app.opponentTable = true;
+                            //                            } else {
+                            //                                app.opponentTable = false;
+                            //                            }
                         })
                     //
                     //    } //END api/games fetch 
