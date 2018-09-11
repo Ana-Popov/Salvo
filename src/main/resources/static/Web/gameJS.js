@@ -1,108 +1,67 @@
-var ships= document.querySelectorAll('.shipTypeLabel');
-var cells = document.querySelectorAll(".userCells")
+var app = new Vue({
+    el: '#app',
+    data: {
+        gameView: [],
+        gameObject: [],
+        rows: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+        cols: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+        players: {},
+        hits: [],
+        opponentTable: false,
+        opponentTable: false,
+        vertical: false,
+        battleships: [],
+        shipsA: [],
+    }, //end data
 
-
-ships.addEventListener('dragstart', dragStart);
-ships.addEventListener('dragend', dragEnd);
-
-function dragStart(){
-    console.log('starts');
-}
-
-function dragEnd(){
-    console.log('end');
-}
-
-function allDrop(event){
-    event.preventDefault();
-}
-//vue js instance
-allowDrop: function(event) {
-            event.preventDefault();
-            event.dataTransfer.dropEffect = 'move';
-        },
-
-        startDrag: function(ev) {
-            app.id = ev.target.id;
-            let placedShip = document.getElementsByClassName(".shipTypeLabel")
-            console.log(placedShip);
-            console.log(existingShips);
-
-        },
-
-        drop: function(ev) {
-            let locShip = ev.target.id;
-            console.log(ships)
-            ev.target.append(document.getElementById(id));
-
-        },
-            
-            //end vue js
-            
-            
-            placeShips: function(cellId){
-        let ship = document.getElementsByClassName("shipTypeLabel")[0];
-        let locationCell = document.getElementById(cellId);
-        
-        let loop;
-        let type;
-        let locationArray = [];
-        
-        if(ship.id == 'destroyer'){
-            loop = 4;
-            type= "destroyer";
-        }
-        
-        let letter = locationCell.id.charAt(1);
-        let number = parseFloat(locationCell.id.charAt(2));
-        locationArray.push(letter+number)
-        for(let i = 0; i < loop; i++){
-            if(ship.classList.contains("shipTypeLabel")){
-                number++;
-                locationArray.push(letter + number)
-            } else{
-                letter = this.rows[this.rows.indexOf(letter) + 1];
-                locationArray.push(letter + number);
-            }
-        }
-        let newShip = {
-            type: type,
-            location: locationArray,
-            
-        }
-        for (let i = 0; i < app.shipsToPlace.length; i++){
-            if( this.shipsToPlace[i].type == newShip.type){
-                var index = app.shipsToPlace.indexOf(this.shipsToPlace[i]);
-                if(index > -1){
-                    app.shipsToPlace.splice(index, 1);
-                }
-            }
-        }
-        this.shipsToPlace.push(newShip);
+    created() {
+        this.fetchData();
+        //        this.getShipLocation();
 
     },
-    selectCell: function (cellId) {
-            let selectedCell = document.getElementById(cellId);
-            if (!selectedCell.classList.contains("shipTypeLabel")) {
-               app.placeShips(cellId);
-//                this.removeOldShip();
-                app.displayShips(app.shipsToPlace, "U");
-            }
-        },
-    shipSelected: function (ship) {
-            app.removeSelectedClass();
-            let selectedShip = document.getElementById(ship);
-            app.selectedShip = selectedShip;
-            if (!app.selectedShip.classList.contains("shipTypeLabel")) {
-                app.selectedShip.classList.add("shipTypeLabel")
-            } else {
-                app.selectedShip.classList.remove("shipTypeLabel")
-            }
+    methods: fetchData: function () {
+            let id = window.location.search.split("=")[1];
+            let url = '/api/game_view/' + id;
+            fetch(url, {
+                    method: "GET",
+                    credentials: "include",
+                })
+                .then((response) => response.json())
+                .then(function (data) {
 
+                    app.gameView = data.gameView;
+                    console.log(app.gameView);
+
+                    app.gameObject = app.gameView.game.gamePlayers;
+                    app.displayShips();
+                    app.getUsername();
+                    app.displaySalvoes(app.gameView['userSalvoes'], 'E')
+                    if (app.gameObject.length == 2) {
+                        app.opponentTable = true;
+                        app.displaySalvoes(app.gameView['opponentSalvoes'], 'U')
+                    } else {
+                        app.opponentTable = false;
+                    }
+
+                })
         },
-    removeSelectedClass: function () {
-            document.getElementById("destroyer").classList.remove("shipTypeLabel");
-            document.getElementById("cruiser").classList.remove("shipTypeLabel");
-            document.getElementById("submarine").classList.remove("shipTypeLabel");
-            document.getElementById("boat").classList.remove("shipTypeLabel");
-        },
+//        displayShips: function () {
+//            let ships = app.gameView.ships;
+//            for (let i = 0; i < ships.length; i++) {
+//                for (let j = 0; j < ships[i].locations.length; j++) {
+//                    let shipLocation = ships[i].locations[j];
+//                    console.log(shipLocation);
+//                    //shiplocation id - dinamically calculates the id as you move on the grid with every cell - it's a special :id="r+c
+//                    let cell = document.getElementById('U' + shipLocation).classList.add("ship-location");
+//                }
+//            }
+//        },
+//        getShipLocation: function (locCell) {
+//            let shipLoc = document.getElementById(locCell);
+//            if (shipLoc.classList.contains("shipTypeLabel")) {
+//                shipLoc.classList.remove("shipTypeLabel")
+//                shipLoc.classList.add("cellShip");
+//            }
+//
+//
+//        },

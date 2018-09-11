@@ -40,29 +40,29 @@
                         </tr>
                         <tr v-for="r in rows">
                             <th class="table-dark" scope="row">{{r}}</th>
-                            <td v-for="c in cols" class="userCells" ondragover="allowDrop(event)" ondrop="drop(event)" :id="'U'+r+c" @click="selectCell(></td>
+                            <td v-for="c in cols" class="userCells" ondragover="allowDrop(event)" ondrop="drop(event)" :id="'U'+r+c"></td>
                         </tr>
 
                     </table>
                 </div>
                 <div class="ship-info col-sm-2 col-md-3 col-lg-2">
-                    <div class="the-ship horiz carrier" ondragover="allowDrop(event)" ondrop="drop(event)"> Carrier <img src="AircraftCarrier1.Flippedpng.png" class="the-ship" id="carrier" @click="e => e.target.classList.toggle('vertical')"
+                    <div class="the-ship carrier" ondragover="allowDrop(event)" ondrop="drop(event)"> Carrier <img src="AircraftCarrier1.Flippedpng.png" class="the-ship horiz" id="carrier" @click="rotate('carrier')"
                     draggable="true" ondragstart="startDrag(event)">
                     </div>
 <!--                    ondragstart="startDrag(event)"-->
 
-                    <div class="the-ship horiz battleship" ondragover="allowDrop(event)" ondrop="drop(event)"> Battleship <img src="Pirates/battleship.png" class="the-ship" id="battleship" @click="e => e.target.classList.toggle('vertical')"
+                    <div class="the-ship battleship" ondragover="allowDrop(event)" ondrop="drop(event)"> Battleship <img src="Pirates/battleship.png" class="the-ship horiz" id="battleship" @click="rotate('battleship')"
                     draggable="true" ondragstart="startDrag(event)" >
                     </div>
 
-                    <div class="the-ship horiz cruiser" ondragover="allowDrop(event)" ondrop="drop(event)"> Cruiser <img src="Pirates/cruiserFlipped.png" class="the-ship" id="cruiser" @click="e => e.target.classList.toggle('vertical')"
+                    <div class="the-ship cruiser" ondragover="allowDrop(event)" ondrop="drop(event)"> Cruiser <img src="Pirates/cruiserFlipped.png" class="the-ship horiz" id="cruiser" @click="rotate('cruiser')"
                     draggable="true" ondragstart="startDrag(event)"></div>
                     
                     
-                    <div class="the-ship horiz" ondragover="allowDrop(event)" ondrop="drop(event)"> Submarine <img src="Pirates/submarine.png" class="the-ship" id="submarine" @click="e => e.target.classList.toggle('vertical')"
+                    <div class="the-ship" ondragover="allowDrop(event)" ondrop="drop(event)"> Submarine <img src="Pirates/submarine.png" class="the-ship horiz" id="submarine" @click="rotate('submarine')"
                     draggable="true" ondragstart="startDrag(event)"></div>
                     
-                    <div class="the-ship horiz" ondragover="allowDrop(event)" ondrop="drop(event)"> Destroyer <img src="Pirates/destroyer.png" class="the-ship" id="destroyer" @click="e => e.target.classList.toggle('vertical')"
+                    <div class="the-ship" ondragover="allowDrop(event)" ondrop="drop(event)"> Destroyer <img src="Pirates/destroyer.png" class="the-ship horiz" id="destroyer" @click="rotate('destroyer')"
                     draggable="true" ondragstart="startDrag(event)"></div>
                 </div>    
                 <div class="salvoes col-sm-10 col-md-8 col-lg-5" v-if="opponentTable">
